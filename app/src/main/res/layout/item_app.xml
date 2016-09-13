@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dd.ShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:sl_shadowColor="@color/colorBlackA"
+    app:sl_shadowRadius="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:background="@drawable/app_bg"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:src="@mipmap/ic_launcher"
+            android:adjustViewBounds="true"
+            android:id="@+id/iv_App"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:layout_marginTop="3dp"
+            android:text="test"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:gravity="center"
+            android:id="@+id/tv_App"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</com.dd.ShadowLayout>

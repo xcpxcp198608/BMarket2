@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Bmarket</string>
+    <string name="text_recommend">Recommend</string>
+    <string name="text_video">Video</string>
+    <string name="text_game">Games</string>
+    <string name="text_im">IM</string>
+    <string name="text_music">Music</string>
+    <string name="text_tools">Tools</string>
+
+    <string name="warning_title">Warning</string>
+    <string name="warning_message1">This Device is not allowed!</string>
+    <string name="warning_exit">Exit</string>
+    <string name="notice_title">Notice</string>
+    <string name="notice_message">The program have a new version ,update now?</string>
+    <string name="confirm">Confirm</string>
+    <string name="download_error">download progress fail ,please reboot program and download again!</string>
+
+</resources>

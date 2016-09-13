@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:background="@color/colorBlue"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <Button
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.dd.ShadowLayout>
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <Button
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.dd.ShadowLayout>
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <Button
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.dd.ShadowLayout>
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <Button
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.dd.ShadowLayout>
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <Button
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.dd.ShadowLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ListView
+            android:listSelector="@color/colorAlpha0"
+            android:layout_marginRight="10dp"
+            android:scrollbars="none"
+            android:divider="@color/colorAlpha0"
+            android:dividerHeight="5dp"
+            android:id="@+id/lv_AppType"
+            android:layout_weight="1.3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <com.dd.ShadowLayout
+                    app:sl_shadowColor="@color/colorBlackA"
+                    app:sl_shadowRadius="5dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <com.jude.rollviewpager.RollPagerView
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:padding="2dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </com.dd.ShadowLayout>
+
+                <com.dd.ShadowLayout
+                    app:sl_shadowColor="@color/colorBlackA"
+                    app:sl_shadowRadius="5dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:padding="2dp"
+                        android:background="@drawable/bg"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <VideoView
+                        android:layout_gravity="center"
+                        android:id="@+id/videoView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    </LinearLayout>
+                </com.dd.ShadowLayout>
+
+            </LinearLayout>
+
+            <GridView
+                android:listSelector="@color/colorAlpha0"
+                android:id="@+id/gv_Apps"
+                android:numColumns="8"
+                android:verticalSpacing="5dp"
+                android:horizontalSpacing="5dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.px.bmarket.CustomView.MarqueeView
+        android:id="@+id/tv_Marquee"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+</LinearLayout>

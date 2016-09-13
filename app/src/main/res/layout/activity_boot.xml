@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/mainbg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.BootActivity">
+
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@drawable/notice_bg"
+        android:id="@+id/ll_Update"
+        android:layout_centerInParent="true"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_UpdateTitle"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="28sp"
+            android:padding="8dp"
+            android:text="@string/notice_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_margin="10dp"
+            android:id="@+id/tv_UpdateMessage"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
+            android:text="@string/notice_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/bt_UpdateConfirm"
+            android:layout_margin="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:background="@color/colorGreen"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:text="@string/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_boot"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/colorAlpha0"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:text="AppMarket"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textColor="@color/colorYellow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:text="collect the best apps !"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_progress"
+        android:layout_above="@id/ll_boot"
+        android:textColor="@color/colorGreen"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ProgressBar
+        android:visibility="gone"
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/tv_progress"
+        android:id="@+id/pb_UpdateProgress"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="500dp"
+        android:layout_height="20dp" />
+
+</RelativeLayout>
