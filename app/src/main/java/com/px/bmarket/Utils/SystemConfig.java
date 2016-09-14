@@ -1,11 +1,16 @@
 package com.px.bmarket.Utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+import android.view.Display;
 import android.widget.Toast;
 
 import java.io.DataOutputStream;
@@ -116,5 +121,26 @@ public class SystemConfig {
         Toast.makeText(context ,message ,Toast.LENGTH_SHORT).show();
     }
 
+    //用系统浏览器打开网址
+    public static void openBrowserByUrl (Context context ,String url){
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent (Intent.ACTION_VIEW ,uri);
+        context.startActivity(intent);
+    }
 
+    public static int getScreenWidth(Activity activity){
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getRealSize(point);
+        int width = point.x;
+        return width;
+    }
+
+    public static int getScreenHeight(Activity activity){
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getRealSize(point);
+        int width = point.y;
+        return width;
+    }
 }

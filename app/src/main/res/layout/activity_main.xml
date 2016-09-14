@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:paddingTop="20dp"
-    android:background="@color/colorBlue"
+    android:background="@drawable/mainbg1"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,20 +13,27 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="80dp">
 
         <ImageView
-            android:layout_marginRight="20dp"
+            android:src="@drawable/logo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="40dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="80dp" />
 
         <com.dd.ShadowLayout
             app:sl_shadowColor="@color/colorBlackA"
             app:sl_shadowRadius="5dp"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_gravity="bottom"
+            android:layout_height="45dp">
             <Button
+                android:id="@+id/bt_link1"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
                 android:background="@drawable/button_red"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -36,10 +42,15 @@
         <com.dd.ShadowLayout
             app:sl_shadowColor="@color/colorBlackA"
             app:sl_shadowRadius="5dp"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="45dp">
             <Button
+                android:id="@+id/bt_link2"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
                 android:background="@drawable/button_red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -48,10 +59,15 @@
         <com.dd.ShadowLayout
             app:sl_shadowColor="@color/colorBlackA"
             app:sl_shadowRadius="5dp"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="45dp">
             <Button
+                android:id="@+id/bt_link3"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
                 android:background="@drawable/button_red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -60,10 +76,15 @@
         <com.dd.ShadowLayout
             app:sl_shadowColor="@color/colorBlackA"
             app:sl_shadowRadius="5dp"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="45dp">
             <Button
+                android:id="@+id/bt_link4"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
                 android:background="@drawable/button_red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -72,10 +93,15 @@
         <com.dd.ShadowLayout
             app:sl_shadowColor="@color/colorBlackA"
             app:sl_shadowRadius="5dp"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="45dp">
             <Button
+                android:id="@+id/bt_link5"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
                 android:background="@drawable/button_red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -95,7 +121,7 @@
             android:divider="@color/colorAlpha0"
             android:dividerHeight="5dp"
             android:id="@+id/lv_AppType"
-            android:layout_weight="1.3"
+            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
 
@@ -118,11 +144,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <com.jude.rollviewpager.RollPagerView
+                        android:id="@+id/rv_Image"
                         android:focusable="true"
                         android:clickable="true"
                         android:padding="2dp"
                         android:layout_gravity="center"
                         android:background="@drawable/bg"
+                        app:rollviewpager_play_delay="6000"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                 </com.dd.ShadowLayout>
@@ -134,6 +162,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <LinearLayout
+                        android:gravity="center"
                         android:padding="2dp"
                         android:background="@drawable/bg"
                         android:focusable="true"
@@ -151,6 +180,7 @@
             </LinearLayout>
 
             <GridView
+                android:padding="5dp"
                 android:listSelector="@color/colorAlpha0"
                 android:id="@+id/gv_Apps"
                 android:numColumns="8"
@@ -164,9 +194,22 @@
 
     </LinearLayout>
 
-    <com.px.bmarket.CustomView.MarqueeView
-        android:id="@+id/tv_Marquee"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp">
+
+
+        <com.px.bmarket.CustomView.MarqueeView
+            android:id="@+id/tv_Marquee"
+            android:textSize="19sp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 </LinearLayout>

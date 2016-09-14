@@ -1,6 +1,305 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:background="@drawable/mainbg1"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:src="@drawable/logo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp" />
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_gravity="bottom"
+            android:layout_height="45dp">
+            <Button
+                android:id="@+id/bt_link1_1"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.dd.ShadowLayout>
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="45dp">
+            <Button
+                android:id="@+id/bt_link2_1"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.dd.ShadowLayout>
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="45dp">
+            <Button
+                android:id="@+id/bt_link3_1"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.dd.ShadowLayout>
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="45dp">
+            <Button
+                android:id="@+id/bt_link4_1"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.dd.ShadowLayout>
+
+        <com.dd.ShadowLayout
+            app:sl_shadowColor="@color/colorBlackA"
+            app:sl_shadowRadius="5dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="45dp">
+            <Button
+                android:id="@+id/bt_link5_1"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                android:background="@drawable/button_red"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.dd.ShadowLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/iv_AppIcon"
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:id="@+id/tv_AppName"
+                android:text="AppName"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:id="@+id/tv_AppType"
+                android:textColor="@color/colorWhite"
+                android:text="@string/text_type"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:id="@+id/tv_AppSize"
+                android:textColor="@color/colorWhite"
+                android:text="@string/text_size"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:id="@+id/tv_AppVersion"
+                android:textColor="@color/colorWhite"
+                android:text="@string/text_version"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:id="@+id/tv_AppLanuage"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:textColor="@color/colorWhite"
+                android:text="@string/text_language"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_marginBottom="5dp"
+                android:text="@string/text_download"
+                android:id="@+id/bt_Download"
+                android:background="@drawable/button_red"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_Progress_1"
+                android:textSize="20sp"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/colorGreen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:visibility="gone"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                android:id="@+id/pb_DownloadProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <com.dd.ShadowLayout
+                    app:sl_shadowColor="@color/colorBlackA"
+                    app:sl_shadowRadius="5dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <com.jude.rollviewpager.RollPagerView
+                        android:id="@+id/rv_Image_1"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:padding="2dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg"
+                        app:rollviewpager_play_delay="6000"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </com.dd.ShadowLayout>
+
+                <com.dd.ShadowLayout
+                    app:sl_shadowColor="@color/colorBlackA"
+                    app:sl_shadowRadius="5dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:background="@drawable/bg"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <VideoView
+                            android:layout_gravity="center"
+                            android:id="@+id/videoView_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </com.dd.ShadowLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <TextView
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/text_summary"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="18sp"
+                        android:textColor="@color/colorWhite"
+                        android:id="@+id/tv_AppSummary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </ScrollView>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <com.px.bmarket.CustomView.MarqueeView
+            android:id="@+id/tv_Marquee_1"
+            android:textSize="19sp"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </LinearLayout>

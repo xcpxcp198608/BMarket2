@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dd.ShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:sl_shadowColor="@color/colorBlackA"
-    app:sl_shadowRadius="5dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -24,7 +22,7 @@
         <TextView
             android:layout_marginTop="3dp"
             android:text="test"
-            android:textColor="@color/colorWhite"
+            android:textColor="@drawable/app_type_text"
             android:textSize="16sp"
             android:singleLine="true"
             android:ellipsize="marquee"
@@ -35,4 +33,4 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-</com.dd.ShadowLayout>
+</LinearLayout>

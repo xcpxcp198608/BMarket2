@@ -1,11 +1,14 @@
 package com.px.bmarket.Beans;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by PX on 2016/9/11.
  */
-public class AppInfo {
+public class AppInfo implements Parcelable {
     @SerializedName("apkName")
     private String apkName;
     @SerializedName("apkFileName")
@@ -166,4 +169,59 @@ public class AppInfo {
                 ", sequence=" + sequence +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.apkName);
+        dest.writeString(this.apkFileName);
+        dest.writeString(this.apkPackageName);
+        dest.writeString(this.apkIconUrl);
+        dest.writeString(this.apkDownloadUrl);
+        dest.writeString(this.apkVersion);
+        dest.writeString(this.apkSize);
+        dest.writeString(this.apkType);
+        dest.writeString(this.apkLanguage);
+        dest.writeString(this.apkSummary);
+        dest.writeString(this.isRecommend);
+        dest.writeString(this.isDisplay);
+        dest.writeInt(this.apkVersionCode);
+        dest.writeInt(this.sequence);
+    }
+
+    public AppInfo() {
+    }
+
+    protected AppInfo(Parcel in) {
+        this.apkName = in.readString();
+        this.apkFileName = in.readString();
+        this.apkPackageName = in.readString();
+        this.apkIconUrl = in.readString();
+        this.apkDownloadUrl = in.readString();
+        this.apkVersion = in.readString();
+        this.apkSize = in.readString();
+        this.apkType = in.readString();
+        this.apkLanguage = in.readString();
+        this.apkSummary = in.readString();
+        this.isRecommend = in.readString();
+        this.isDisplay = in.readString();
+        this.apkVersionCode = in.readInt();
+        this.sequence = in.readInt();
+    }
+
+    public static final Parcelable.Creator<AppInfo> CREATOR = new Parcelable.Creator<AppInfo>() {
+        @Override
+        public AppInfo createFromParcel(Parcel source) {
+            return new AppInfo(source);
+        }
+
+        @Override
+        public AppInfo[] newArray(int size) {
+            return new AppInfo[size];
+        }
+    };
 }

@@ -79,14 +79,17 @@ public class DownloadManager {
     };
 
     public void startDownload(String fileName ,String downloadUrl ,String filePath){
-        DownloadInfo downloadInfo =null ;
-        if(sqLiteDao.isExists(fileName)){
-            downloadInfo = sqLiteDao.queryDataByFileName(fileName);
-        }else{
-            downloadInfo = new DownloadInfo();
-            downloadInfo.setFileName(fileName);
-            downloadInfo.setDownloadUrl(downloadUrl);
-        }
+//        DownloadInfo downloadInfo =null ;
+//        if(sqLiteDao.isExists(fileName)){
+//            downloadInfo = sqLiteDao.queryDataByFileName(fileName);
+//        }else{
+//            downloadInfo = new DownloadInfo();
+//            downloadInfo.setFileName(fileName);
+//            downloadInfo.setDownloadUrl(downloadUrl);
+//        }
+        DownloadInfo downloadInfo = new DownloadInfo();
+        downloadInfo.setFileName(fileName);
+        downloadInfo.setDownloadUrl(downloadUrl);
         downloadTask(downloadInfo ,filePath);
     }
 

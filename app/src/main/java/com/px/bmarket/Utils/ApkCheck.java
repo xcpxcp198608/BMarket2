@@ -87,9 +87,9 @@ public class ApkCheck {
     }
 
     //通过file path 和 file full name 判断apk 安装文件是否存在
-    public static boolean isApkFileExists(String apkFilePath ,String apkFileFullName ){
+    public static boolean isFileExists(String filePath ,String fileFullName ){
         try {
-            File file = new File(apkFilePath+apkFileFullName);
+            File file = new File(filePath+fileFullName);
             if(! file.exists()){
                 return false;
             }

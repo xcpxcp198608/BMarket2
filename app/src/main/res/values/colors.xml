@@ -11,11 +11,28 @@
     <color name="colorGreen">#FF00ff00</color>
     <color name="colorGreen1">#038e03</color>
     <color name="colorBlue">#FF0000ff</color>
+    <color name="colorBlue1">#272749</color>
+    <color name="colorOrange">#f1bf0b</color>
     <color name="colorAlpha0">#00000000</color>
+    <color name="colorAlpha1">#11000000</color>
     <color name="colorAlpha2">#22000000</color>
     <color name="colorAlpha3">#33000000</color>
     <color name="colorAlpha5">#55000000</color>
+    <color name="colorAlpha7">#77000000</color>
+
+    <color name="colorAlphaW0">#00ffffff</color>
+    <color name="colorAlphaW1">#11ffffff</color>
+    <color name="colorAlphaW2">#22FFFFFF</color>
+    <color name="colorAlphaW3">#33ffffff</color>
+    <color name="colorAlphaW5">#55ffffff</color>
+    <color name="colorAlphaW7">#77ffffff</color>
+    <color name="colorAlphaW8">#88ffffff</color>
+    <color name="colorAlphaW9">#99ffffff</color>
 
     <color name="colorButtonRed1">#F53B0D</color>
     <color name="colorButtonRed2">#ec8e77</color>
+    <color name="colorButtonBlue1">#0d128f</color>
+    <color name="colorButtonBlue2">#418efa</color>
+    <color name="colorButtonGreen1">#50ec18</color>
+    <color name="colorButtonGreen2">#5df191</color>
 </resources>

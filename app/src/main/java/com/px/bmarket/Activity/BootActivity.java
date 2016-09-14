@@ -3,6 +3,7 @@ package com.px.bmarket.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -60,12 +61,14 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     private DownloadManager downloadManager;
     private boolean load= false;
     private SQLiteDao sqliteDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boot);
         ButterKnife.bind(this);
         sqliteDao = SQLiteDao.getInstance(BootActivity.this);
+
     }
 
     @Override
