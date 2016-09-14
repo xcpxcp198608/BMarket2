@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:background="@drawable/mainbg1"
+    android:paddingTop="10dp"
+    android:background="@drawable/mainbg3"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,10 +18,15 @@
 
         <ImageView
             android:src="@drawable/logo"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="40dp"
-            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="80dp" />
+
+        <LinearLayout
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
 
         <com.dd.ShadowLayout
             app:sl_shadowColor="@color/colorBlackA"
@@ -34,7 +40,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
-                android:background="@drawable/button_red"
+                android:background="@drawable/button_blue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.dd.ShadowLayout>
@@ -51,7 +57,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
-                android:background="@drawable/button_red"
+                android:background="@drawable/button_blue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.dd.ShadowLayout>
@@ -68,7 +74,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
-                android:background="@drawable/button_red"
+                android:background="@drawable/button_blue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.dd.ShadowLayout>
@@ -85,7 +91,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
-                android:background="@drawable/button_red"
+                android:background="@drawable/button_blue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.dd.ShadowLayout>
@@ -102,10 +108,11 @@
                 android:textSize="18sp"
                 android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
-                android:background="@drawable/button_red"
+                android:background="@drawable/button_blue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.dd.ShadowLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -175,7 +182,7 @@
                 android:layout_marginBottom="5dp"
                 android:text="@string/text_download"
                 android:id="@+id/bt_Download"
-                android:background="@drawable/button_red"
+                android:background="@drawable/button_blue"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"

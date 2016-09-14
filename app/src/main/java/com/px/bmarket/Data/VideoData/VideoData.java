@@ -127,8 +127,7 @@ public class VideoData implements IVideoData {
     }
 
     public boolean isFileIntact(String md5){
-        File file = new File(F.path.video ,"btvi3.mp4");
-        String localMD5 = MD5.getFileMD5(file);
+        String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
         if(localMD5.equals(md5)){
             return true;
         }else{

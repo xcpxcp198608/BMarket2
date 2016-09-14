@@ -140,6 +140,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     protected void onStop() {
         super.onStop();
         if(videoView!=null){
+            videoView.pause();
             videoView.stopPlayback();
         }
     }
