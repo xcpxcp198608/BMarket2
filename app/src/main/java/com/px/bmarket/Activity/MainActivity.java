@@ -7,11 +7,13 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.jude.rollviewpager.OnItemClickListener;
@@ -84,6 +86,8 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     private SharedPreferences sharedPreferences;
     private boolean isVideoCanPlay;
 
+    private long backExitTime;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +143,15 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     @Override
     protected void onStop() {
         super.onStop();
+        if(videoView!=null){
+            videoView.pause();
+            videoView.stopPlayback();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         if(videoView!=null){
             videoView.pause();
             videoView.stopPlayback();
@@ -339,6 +352,19 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
                 SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(4).getUrl());
                 break;
         }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - backExitTime) > 2000) {
+                Toast.makeText(MainActivity.this, getString(R.string.exit_toast), Toast.LENGTH_SHORT).show();
+                backExitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

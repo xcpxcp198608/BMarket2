@@ -112,7 +112,7 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     protected void onStart() {
         super.onStart();
         presenter.dispatch();
-
+        bt_Download.requestFocus();
         sharedPreferences = getSharedPreferences(F.sp.video,MODE_PRIVATE);
         isVideoCanPlay = sharedPreferences.getBoolean("isVideoCanPlay" ,false);
         Logger.d(isVideoCanPlay+"");
@@ -132,11 +132,18 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
             videoView1.pause();
             videoView1.stopPlayback();
         }
+        if(downloadManager!= null){
+            downloadManager.pauseDownload();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(videoView1!= null) {
+            videoView1.pause();
+            videoView1.stopPlayback();
+        }
         if(downloadManager!= null){
             downloadManager.pauseDownload();
         }

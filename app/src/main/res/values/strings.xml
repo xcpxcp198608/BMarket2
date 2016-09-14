@@ -15,7 +15,7 @@
     <string name="text_downloading">Downloading</string>
     <string name="text_install">Install</string>
     <string name="text_launch">Launch</string>
-
+    <string name="exit_toast">Press back key down again exit program</string>
 
     <string name="warning_title">Warning</string>
     <string name="warning_message1">This Device is not allowed!</string>
