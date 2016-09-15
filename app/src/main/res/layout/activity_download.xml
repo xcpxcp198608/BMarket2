@@ -247,7 +247,7 @@
                     <LinearLayout
                         android:gravity="center"
                         android:padding="2dp"
-                        android:background="@drawable/bg"
+                        android:background="@drawable/bg1"
                         android:focusable="true"
                         android:clickable="true"
                         android:layout_width="match_parent"
