@@ -1,8 +1,16 @@
 package com.px.bmarket.Data.RollImageData;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.px.bmarket.Application;
 import com.px.bmarket.Beans.RollImageInfo;
 import com.px.bmarket.F;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -19,27 +27,32 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RollImageData implements IRollImageData {
     @Override
     public void loadData(final OnCompletedListener onCompletedListener) {
-        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-        okHttpClient.connectTimeout(30, TimeUnit.SECONDS);
-
-        new Retrofit.Builder().baseUrl(F.url.base_url)
-                .client(okHttpClient.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(IRollImageService.class)
-                .getData()
-                .enqueue(new Callback<List<RollImageInfo>>() {
-                    @Override
-                    public void onResponse(Call<List<RollImageInfo>> call, Response<List<RollImageInfo>> response) {
-                        if(response!=null){
-                            onCompletedListener.onCompleted(response.body());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.roll_view_info, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                if(jsonArray.length()>0){
+                    try {
+                        List<RollImageInfo> list = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject j = jsonArray.getJSONObject(i);
+                            RollImageInfo r = new RollImageInfo();
+                            r.setImageUrl(j.getString("imageUrl"));
+                            r.setLinkUrl(j.getString("linkUrl"));
+                            list.add(r);
                         }
+                        onCompletedListener.onCompleted(list);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                    @Override
-                    public void onFailure(Call<List<RollImageInfo>> call, Throwable t) {
-                        onCompletedListener.onError(t.getMessage());
-                    }
-                });
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                onCompletedListener.onError(volleyError.getMessage());
+            }
+        });
+        jsonArrayRequest.setTag("RollImageInfo");
+        Application.getVolleyRequest().add(jsonArrayRequest);
     }
 }

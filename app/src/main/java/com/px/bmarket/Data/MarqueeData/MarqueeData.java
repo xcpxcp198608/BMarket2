@@ -1,7 +1,13 @@
 package com.px.bmarket.Data.MarqueeData;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.px.bmarket.Application;
 import com.px.bmarket.Beans.MarqueeInfo;
 import com.px.bmarket.F;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,25 +24,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MarqueeData implements IMarqueeData {
     @Override
     public void loadData(final OnCompletedListener onCompletedListener) {
-        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-        okHttpClient.connectTimeout(30, TimeUnit.SECONDS);
-
-        new Retrofit.Builder().baseUrl(F.url.base_url)
-                .client(okHttpClient.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(IMarqueeService.class)
-                .getData()
-                .enqueue(new Callback<MarqueeInfo>() {
-                    @Override
-                    public void onResponse(Call<MarqueeInfo> call, Response<MarqueeInfo> response) {
-                        onCompletedListener.onCompleted(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<MarqueeInfo> call, Throwable t) {
-                        onCompletedListener.onError(t.getMessage());
-                    }
-                });
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(F.url.marquee_info, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                MarqueeInfo marqueeInfo = new MarqueeInfo();
+                try {
+                    marqueeInfo.setText(jsonObject.getString("text"));
+                    marqueeInfo.setColorR(jsonObject.getInt("colorR"));
+                    marqueeInfo.setColorG(jsonObject.getInt("colorG"));
+                    marqueeInfo.setColorB(jsonObject.getInt("colorB"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                onCompletedListener.onCompleted(marqueeInfo);
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                onCompletedListener.onError(volleyError.getMessage());
+            }
+        });
+        jsonObjectRequest.setTag("MarqueeInfo");
+        Application.getVolleyRequest().add(jsonObjectRequest);
     }
 }

@@ -23,14 +23,16 @@ import com.px.bmarket.Beans.MarqueeInfo;
 import com.px.bmarket.Beans.RollImageInfo;
 import com.px.bmarket.CustomView.MarqueeView;
 import com.px.bmarket.F;
+import com.px.bmarket.FileDownload.DownloadFileInfo;
+import com.px.bmarket.FileDownload.DownloadManager;
+import com.px.bmarket.FileDownload.DownloadStatusListener;
 import com.px.bmarket.Presenter.DownloadActivityPresenter;
 import com.px.bmarket.R;
 import com.px.bmarket.Utils.ApkCheck;
 import com.px.bmarket.Utils.ApkInstall;
 import com.px.bmarket.Utils.ApkLaunch;
-import com.px.bmarket.Utils.FileDownload.DownloadManager;
-import com.px.bmarket.Utils.FileDownload.OnDownloadListener;
 import com.px.bmarket.Utils.Logger;
+import com.px.bmarket.Utils.MD5;
 import com.px.bmarket.Utils.SystemConfig;
 import com.squareup.picasso.Picasso;
 
@@ -87,7 +89,6 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     private boolean isDownloading =false;
 
     private SharedPreferences sharedPreferences;
-    private boolean isVideoCanPlay;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,8 +115,6 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         presenter.dispatch();
         bt_Download.requestFocus();
         sharedPreferences = getSharedPreferences(F.sp.video,MODE_PRIVATE);
-        isVideoCanPlay = sharedPreferences.getBoolean("isVideoCanPlay" ,false);
-        Logger.d(isVideoCanPlay+"");
         playVideo();
     }
 
@@ -280,11 +279,14 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
 
     private void downloadApp(){
         if(downloadManager == null){
-            downloadManager = DownloadManager.getInstance(DownloadActivity.this);
-            downloadManager.startDownload(appInfo.getApkFileName() ,appInfo.getApkDownloadUrl() , F.path.apps);
-            downloadManager.setOnDownloadListener(new OnDownloadListener() {
+            downloadManager = new DownloadManager(DownloadActivity.this);
+            DownloadFileInfo downloadFileInfo = new DownloadFileInfo();
+            downloadFileInfo.setFileFullName(appInfo.getApkFileName());
+            downloadFileInfo.setFileDownloadUrl(appInfo.getApkDownloadUrl());
+            downloadManager.startDownload(downloadFileInfo , F.path.apps);
+            downloadManager.setDownloadStatusListener(new DownloadStatusListener() {
                 @Override
-                public void onStart(int progress, boolean isStart) {
+                public void startDownload(boolean isStart, long fileLength) {
                     isDownloading = true;
                     bt_Download.setText(getString(R.string.text_downloading));
                     bt_Download.setBackgroundResource(R.drawable.button_red_normal);
@@ -293,18 +295,18 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
                 }
 
                 @Override
-                public void onProgressChange(int progress) {
+                public void pauseDownload(boolean isPauseDownload, int progress) {
+                    isDownloading = false;
+                }
+
+                @Override
+                public void downloadProgressChanged(boolean isDownloading, int progress) {
                     tv_Progress1.setText(progress+"%");
                     pb_DownloadProgress.setProgress(progress);
                 }
 
                 @Override
-                public void onPause(int progress) {
-                    isDownloading = false;
-                }
-
-                @Override
-                public void onCompleted(int progress) {
+                public void completedDownload(boolean isCompleted, int progress) {
                     isDownloading = false;
                     bt_Download.setText(getString(R.string.text_install));
                     bt_Download.setBackgroundResource(R.drawable.button_blue);
@@ -332,8 +334,19 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         }
     }
 
+    private boolean isVideoCanPlay(){
+        String md5 = sharedPreferences.getString("md5","1");
+        String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
+        Logger.d(md5);
+        if(localMD5.equals(md5)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     private void playVideo() {
-        if(isVideoCanPlay){
+        if(isVideoCanPlay()){
             videoView1.setVideoPath(F.path.video+"btvi3.mp4");
         }else {
             videoView1.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
@@ -347,7 +360,7 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         videoView1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if(isVideoCanPlay){
+                if(isVideoCanPlay()){
                     videoView1.setVideoPath(F.path.video+"btvi3.mp4");
                 }else {
                     videoView1.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));

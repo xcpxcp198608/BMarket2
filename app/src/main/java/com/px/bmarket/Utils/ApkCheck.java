@@ -90,13 +90,15 @@ public class ApkCheck {
     public static boolean isFileExists(String filePath ,String fileFullName ){
         try {
             File file = new File(filePath+fileFullName);
-            if(! file.exists()){
+            if(file.exists()){
+                return true;
+            }
+            else {
                 return false;
             }
         }catch (Exception e){
             return false;
         }
-        return true;
     }
     //通过file path 和 file full name 删除apk文件
     public static boolean deleteApkFile (String apkFilePath , String apkFileFullName ){

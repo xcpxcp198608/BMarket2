@@ -20,7 +20,7 @@ public class MD5 {
     public static String getFileMD5(String filePath,String fileName) {
         File file = new File(filePath,fileName);
         if (!file.isFile()) {
-            return null;
+            return "11";
         }
         MessageDigest digest = null;
         FileInputStream in = null;

@@ -5,8 +5,8 @@ package com.px.bmarket.Utils.FileDownload;
  */
 public interface OnDownloadListener {
 
-    void onStart(int progress ,boolean isStart);
+    void onStart(int progress, boolean isStart);
     void onProgressChange(int progress);
     void onPause(int progress);
-    void onCompleted(int progress );
+    void onCompleted(int progress);
 }

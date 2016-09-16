@@ -13,8 +13,6 @@ import com.px.bmarket.Data.MarqueeData.IMarqueeData;
 import com.px.bmarket.Data.MarqueeData.MarqueeData;
 import com.px.bmarket.Data.RollImageData.IRollImageData;
 import com.px.bmarket.Data.RollImageData.RollImageData;
-import com.px.bmarket.Data.VideoData.IVideoData;
-import com.px.bmarket.Data.VideoData.VideoData;
 import com.px.bmarket.Utils.Logger;
 
 import java.util.List;
@@ -27,13 +25,11 @@ public class MainActivityPresenter extends BasePresenter<IMainActivity> {
     private IRollImageData iRollImageData;
     private IMarqueeData iMarqueeData;
     private IButtonData iButtonData;
-    private IVideoData iVideoData;
     public MainActivityPresenter(IMainActivity iMainActivity) {
         this.iMainActivity = iMainActivity;
         iRollImageData = new RollImageData();
         iMarqueeData = new MarqueeData();
         iButtonData = new ButtonData();
-        iVideoData = new VideoData((Context) iMainActivity);
     }
 
     public void dispatch(){
@@ -75,20 +71,6 @@ public class MainActivityPresenter extends BasePresenter<IMainActivity> {
                 @Override
                 public void onError(String e) {
                     Logger.d(e);
-                }
-            });
-        }
-
-        if(iVideoData != null){
-            iVideoData.loadData(new IVideoData.OnCompletedListener() {
-                @Override
-                public void onCompleted(VideoInfo videoInfo) {
-
-                }
-
-                @Override
-                public void onError(String e) {
-
                 }
             });
         }

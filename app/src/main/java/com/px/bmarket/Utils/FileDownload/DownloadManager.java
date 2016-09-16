@@ -111,7 +111,7 @@ public class DownloadManager {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("----px----","start");
+                Log.d("----px----",downloadInfo.getFileName()+"start");
                 long fileLength;
                 int progress;
                 long startLength = downloadInfo.getStartPosition() + downloadInfo.getCompletePosition();
@@ -144,10 +144,10 @@ public class DownloadManager {
                                 time = System.currentTimeMillis();
                                 progress = (int) (completed * 100L / downloadInfo.getFileLength());
                                 handler.obtainMessage(MSG_PROGRESS, progress).sendToTarget();
-                                Log.d("----px----",progress+"");
+                                Log.d("----px----",downloadInfo.getFileName()+progress);
                             }
                             if (pauseDownload) {
-                                Log.d("----px----","pause");
+                                Log.d("----px----",downloadInfo.getFileName()+"pause");
                                 downloadInfo.setCompletePosition(completed);
                                 sqLiteDao.insertOrUpdateData(downloadInfo);
                                 handler.obtainMessage(MSG_PAUSE, (int) (completed * 100L / downloadInfo.getFileLength())).sendToTarget();

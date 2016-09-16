@@ -3,7 +3,6 @@ package com.px.bmarket.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -13,36 +12,31 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.px.bmarket.Application;
 import com.px.bmarket.Beans.AppInfo;
 import com.px.bmarket.Beans.AppMarketInfo;
-import com.px.bmarket.Data.AppData.IAppService;
 import com.px.bmarket.F;
+import com.px.bmarket.FileDownload.DownloadFileInfo;
+import com.px.bmarket.FileDownload.DownloadManager;
+import com.px.bmarket.FileDownload.DownloadStatusListener;
 import com.px.bmarket.Presenter.BootActivityPresenter;
 import com.px.bmarket.R;
 import com.px.bmarket.SQLite.SQLiteDao;
 import com.px.bmarket.Utils.ApkCheck;
 import com.px.bmarket.Utils.ApkInstall;
-import com.px.bmarket.Utils.FileDownload.DownloadManager;
-import com.px.bmarket.Utils.FileDownload.OnDownloadListener;
 import com.px.bmarket.Utils.Logger;
 import com.px.bmarket.Utils.SystemConfig;
 
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+
 
 public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresenter> implements IBootActivity {
 
@@ -131,10 +125,9 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
 
     @Override
     public void checkUpdate(AppMarketInfo appMarketInfo) {
-        Logger.d(appMarketInfo.toString());
         int localVerCode = ApkCheck.getInstalledApkVersionCode(BootActivity.this, getPackageName());
         if (localVerCode >= appMarketInfo.getApkVersionCode()) {
-            loadAppInfo();
+            loadApp();
         } else {
             ll_Update.setVisibility(View.VISIBLE);
             tv_UpdateMessage.setText(appMarketInfo.getApkUpdateInfo());
@@ -143,43 +136,46 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
         }
     }
 
-    public void loadAppInfo() {
-        new Retrofit.Builder()
-                .baseUrl(F.url.base_url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(IAppService.class)
-                .getData()
-                .enqueue(new Callback<List<AppInfo>>() {
-                    @Override
-                    public void onResponse(Call<List<AppInfo>> call, Response<List<AppInfo>> response) {
-                        Observable.from(response.body())
-                                .subscribe(new Subscriber<AppInfo>() {
-                                    @Override
-                                    public void onCompleted() {
-                                        //Logger.d("completed");
-                                        startActivity(new Intent(BootActivity.this ,MainActivity.class));
-                                        finish();
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-
-                                    }
-
-                                    @Override
-                                    public void onNext(AppInfo appInfo) {
-                                        //Logger.d(appInfo.toString());
-                                        sqliteDao.insertOrUpdateData(appInfo);
-                                    }
-                                });
+    public void loadApp(){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.app_info, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                if(jsonArray.length()>0){
+                    try {
+                    for (int i = 0; i <jsonArray.length() ; i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        AppInfo appInfo = new AppInfo();
+                        appInfo.setApkName(jsonObject.getString("apkName"));
+                        appInfo.setApkFileName(jsonObject.getString("apkFileName"));
+                        appInfo.setApkPackageName(jsonObject.getString("apkPackageName"));
+                        appInfo.setApkIconUrl(jsonObject.getString("apkIconUrl"));
+                        appInfo.setApkDownloadUrl(jsonObject.getString("apkDownloadUrl"));
+                        appInfo.setApkVersion(jsonObject.getString("apkVersion"));
+                        appInfo.setApkSize(jsonObject.getString("apkSize"));
+                        appInfo.setApkType(jsonObject.getString("apkType"));
+                        appInfo.setApkLanguage(jsonObject.getString("apkLanguage"));
+                        appInfo.setApkSummary(jsonObject.getString("apkSummary"));
+                        appInfo.setIsRecommend(jsonObject.getString("isRecommend"));
+                        appInfo.setIsDisplay(jsonObject.getString("isDisplay"));
+                        appInfo.setApkVersionCode(jsonObject.getInt("apkVersionCode"));
+                        appInfo.setSequence(jsonObject.getInt("sequence"));
+                        sqliteDao.insertOrUpdateData(appInfo);
                     }
-
-                    @Override
-                    public void onFailure(Call<List<AppInfo>> call, Throwable t) {
-
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
+                    startActivity(new Intent(BootActivity.this ,MainActivity.class));
+                    finish();
+                }
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Logger.d(volleyError.getMessage());
+            }
+        });
+        jsonArrayRequest.setTag("AppInfo");
+        Application.getVolleyRequest().add(jsonArrayRequest);
     }
 
     @OnClick(R.id.bt_UpdateConfirm)
@@ -195,28 +191,31 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     private void updateAppMarket(final AppMarketInfo appMarketInfo) {
         Logger.d(appMarketInfo.toString());
         if(downloadManager == null){
-            downloadManager = DownloadManager.getInstance(BootActivity.this);
+            downloadManager = new DownloadManager(BootActivity.this);
         }
-        downloadManager.startDownload(appMarketInfo.getApkFileName() ,appMarketInfo.getApkFileDownloadUrl() ,F.path.market);
-        downloadManager.setOnDownloadListener(new OnDownloadListener() {
+        DownloadFileInfo downloadFileInfo = new DownloadFileInfo();
+        downloadFileInfo.setFileFullName(appMarketInfo.getApkFileName());
+        downloadFileInfo.setFileDownloadUrl(appMarketInfo.getApkFileDownloadUrl());
+        downloadManager.startDownload(downloadFileInfo ,F.path.market);
+        downloadManager.setDownloadStatusListener(new DownloadStatusListener() {
             @Override
-            public void onStart(int progress, boolean isStart) {
+            public void startDownload(boolean isStart, long fileLength) {
 
             }
 
             @Override
-            public void onProgressChange(int progress) {
+            public void pauseDownload(boolean isPauseDownload, int progress) {
+
+            }
+
+            @Override
+            public void downloadProgressChanged(boolean isDownloading, int progress) {
                 pb_UpdateProgress.setProgress(progress);
                 tv_Progress.setText(progress+"%");
             }
 
             @Override
-            public void onPause(int progress) {
-
-            }
-
-            @Override
-            public void onCompleted(int progress) {
+            public void completedDownload(boolean isCompleted, int progress) {
                 pb_UpdateProgress.setProgress(100);
                 tv_Progress.setText(100+"%");
                 pb_UpdateProgress.setVisibility(View.GONE);

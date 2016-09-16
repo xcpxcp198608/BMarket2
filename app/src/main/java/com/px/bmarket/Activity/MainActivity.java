@@ -26,33 +26,22 @@ import com.px.bmarket.Beans.AppInfo;
 import com.px.bmarket.Beans.ButtonInfo;
 import com.px.bmarket.Beans.MarqueeInfo;
 import com.px.bmarket.Beans.RollImageInfo;
-import com.px.bmarket.Beans.VideoInfo;
 import com.px.bmarket.CustomView.MarqueeView;
-import com.px.bmarket.Data.VideoData.IVideoService;
 import com.px.bmarket.F;
 import com.px.bmarket.Presenter.MainActivityPresenter;
 import com.px.bmarket.R;
 import com.px.bmarket.SQLite.SQLiteDao;
 import com.px.bmarket.Utils.ApkCheck;
-import com.px.bmarket.Utils.FileDownload.DownloadManager;
-import com.px.bmarket.Utils.FileDownload.OnDownloadListener;
 import com.px.bmarket.Utils.Logger;
 import com.px.bmarket.Utils.MD5;
 import com.px.bmarket.Utils.SystemConfig;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by PX on 2016/9/11.
@@ -84,8 +73,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     private SQLiteDao sqLiteDao;
     private List<ButtonInfo> mButtonInfos;
     private SharedPreferences sharedPreferences;
-    private boolean isVideoCanPlay;
-
     private long backExitTime;
 
     @Override
@@ -105,7 +92,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         presenter.dispatch();
         showRecommendApp();
         sharedPreferences = getSharedPreferences(F.sp.video,MODE_PRIVATE);
-        isVideoCanPlay = sharedPreferences.getBoolean("isVideoCanPlay" ,false);
         playVideo();
         lv_AppType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -307,9 +293,20 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
             }
         });
     }
+
+    private boolean isVideoCanPlay(){
+        String md5 = sharedPreferences.getString("md5","1");
+        String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
+        Logger.d(md5);
+        if(localMD5.equals(md5)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     //播放影片
     private void playVideo() {
-        if(isVideoCanPlay){
+        if(isVideoCanPlay()){
             videoView.setVideoPath(F.path.video+"btvi3.mp4");
         }else {
             videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
@@ -323,7 +320,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if(isVideoCanPlay){
+                if(isVideoCanPlay()){
                     videoView.setVideoPath(F.path.video+"btvi3.mp4");
                 }else {
                     videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
