@@ -14,4 +14,5 @@ public interface IDownloadActivity {
     void loadRollImage(List<RollImageInfo> rollImageInfos);
     void loadMarquee (MarqueeInfo marqueeInfo);
     void loadButton(List<ButtonInfo> buttonInfos);
+    void loadVideo(VideoInfo videoInfo);
 }

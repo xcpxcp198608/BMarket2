@@ -27,6 +27,7 @@ import com.px.bmarket.Beans.AppInfo;
 import com.px.bmarket.Beans.ButtonInfo;
 import com.px.bmarket.Beans.MarqueeInfo;
 import com.px.bmarket.Beans.RollImageInfo;
+import com.px.bmarket.Beans.VideoInfo;
 import com.px.bmarket.CustomView.MarqueeView;
 import com.px.bmarket.F;
 import com.px.bmarket.Presenter.MainActivityPresenter;
@@ -73,7 +74,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     private AppTypeAdapter appTypeAdapter;
     private SQLiteDao sqLiteDao;
     private List<ButtonInfo> mButtonInfos;
-    private SharedPreferences sharedPreferences;
     private long backExitTime;
 
     @Override
@@ -92,8 +92,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         super.onStart();
         presenter.dispatch();
         showRecommendApp();
-        sharedPreferences = getSharedPreferences(F.sp.video,MODE_PRIVATE);
-        playVideo();
         lv_AppType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -103,7 +101,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
                         showRecommendApp();
                         break;
                     case 1:
-                        showAppByType("video");
+                        showAppByType("movie");
                         break;
                     case 2:
                         showAppByType("game");
@@ -125,6 +123,37 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
 
             }
         });
+        lv_AppType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Animator.zoomIn09_10(view);
+                switch (position) {
+                    case 0:
+                        showRecommendApp();
+                        break;
+                    case 1:
+                        showAppByType("movie");
+                        break;
+                    case 2:
+                        showAppByType("game");
+                        break;
+                    case 3:
+                        showAppByType("chat");
+                        break;
+                    case 4:
+                        showAppByType("music");
+                        break;
+                    case 5:
+                        showAppByType("tool");
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -238,6 +267,11 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
             }
         });
     }
+
+    @Override
+    public void loadVideo(VideoInfo videoInfo) {
+        playVideo(videoInfo.getMd5());
+    }
     //显示推荐的APP
     private void showRecommendApp() {
         List<AppInfo> list = new ArrayList<>();
@@ -295,19 +329,17 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         });
     }
 
-    private boolean isVideoCanPlay(){
-        String md5 = Application.getVideoMd5();
+    private boolean isVideoCanPlay(String videoMD5){
         String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
-        Logger.d(md5);
-        if(localMD5.equals(md5)){
+        if(localMD5.equals(videoMD5)){
             return true;
         }else{
             return false;
         }
     }
     //播放影片
-    private void playVideo() {
-        if(isVideoCanPlay()){
+    private void playVideo(final String videoMD5) {
+        if(isVideoCanPlay(videoMD5)){
             videoView.setVideoPath(F.path.video+"btvi3.mp4");
         }else {
             videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
@@ -321,7 +353,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if(isVideoCanPlay()){
+                if(isVideoCanPlay(videoMD5)){
                     videoView.setVideoPath(F.path.video+"btvi3.mp4");
                 }else {
                     videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));

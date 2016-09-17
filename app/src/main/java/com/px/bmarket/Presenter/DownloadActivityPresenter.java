@@ -5,12 +5,15 @@ import com.px.bmarket.Activity.IDownloadActivity;
 import com.px.bmarket.Beans.ButtonInfo;
 import com.px.bmarket.Beans.MarqueeInfo;
 import com.px.bmarket.Beans.RollImageInfo;
+import com.px.bmarket.Beans.VideoInfo;
 import com.px.bmarket.Data.ButtonData.ButtonData;
 import com.px.bmarket.Data.ButtonData.IButtonData;
 import com.px.bmarket.Data.MarqueeData.IMarqueeData;
 import com.px.bmarket.Data.MarqueeData.MarqueeData;
 import com.px.bmarket.Data.RollImageData.IRollImageData;
 import com.px.bmarket.Data.RollImageData.RollImageData;
+import com.px.bmarket.Data.VideoData.IVideoData;
+import com.px.bmarket.Data.VideoData.VideoData;
 import com.px.bmarket.Utils.Logger;
 
 import java.util.List;
@@ -23,12 +26,14 @@ public class DownloadActivityPresenter extends BasePresenter<IDownloadActivity> 
     private IRollImageData iRollImageData;
     private IButtonData iButtonData;
     private IMarqueeData iMarqueeData;
+    private IVideoData iVideoData;
 
     public DownloadActivityPresenter(IDownloadActivity iDownloadActivity) {
         this.iDownloadActivity = iDownloadActivity;
         iRollImageData = new RollImageData();
         iMarqueeData = new MarqueeData();
         iButtonData = new ButtonData();
+        iVideoData = new VideoData();
     }
 
     public void dispatch(){
@@ -70,6 +75,19 @@ public class DownloadActivityPresenter extends BasePresenter<IDownloadActivity> 
                 @Override
                 public void onError(String e) {
                     Logger.d(e);
+                }
+            });
+        }
+        if(iVideoData != null){
+            iVideoData.loadData(new IVideoData.OnCompletedListener() {
+                @Override
+                public void onCompleted(VideoInfo videoInfo) {
+                    iDownloadActivity.loadVideo(videoInfo);
+                }
+
+                @Override
+                public void onError(String e) {
+
                 }
             });
         }

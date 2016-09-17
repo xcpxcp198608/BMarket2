@@ -206,7 +206,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
 
             @Override
             public void pauseDownload(boolean isPauseDownload, int progress) {
-
+                
             }
 
             @Override

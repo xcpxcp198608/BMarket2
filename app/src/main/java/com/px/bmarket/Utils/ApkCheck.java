@@ -91,12 +91,15 @@ public class ApkCheck {
         try {
             File file = new File(filePath+fileFullName);
             if(file.exists()){
+                Logger.d("----file is exists");
                 return true;
             }
             else {
+                Logger.d("----file is not exists");
                 return false;
             }
         }catch (Exception e){
+            Logger.d("----file is not exists");
             return false;
         }
     }

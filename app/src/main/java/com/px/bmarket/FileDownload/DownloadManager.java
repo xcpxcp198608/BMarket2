@@ -3,6 +3,9 @@ package com.px.bmarket.FileDownload;
 import android.content.Context;
 import android.content.Intent;
 
+import com.px.bmarket.Utils.ApkCheck;
+import com.px.bmarket.Utils.FileCheck;
+
 
 /**
  * 创建DownloadFileInfo 对象（name and url is not null）

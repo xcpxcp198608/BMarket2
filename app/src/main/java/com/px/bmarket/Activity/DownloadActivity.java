@@ -22,6 +22,7 @@ import com.px.bmarket.Beans.AppInfo;
 import com.px.bmarket.Beans.ButtonInfo;
 import com.px.bmarket.Beans.MarqueeInfo;
 import com.px.bmarket.Beans.RollImageInfo;
+import com.px.bmarket.Beans.VideoInfo;
 import com.px.bmarket.CustomView.MarqueeView;
 import com.px.bmarket.F;
 import com.px.bmarket.FileDownload.DownloadFileInfo;
@@ -89,8 +90,6 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     private DownloadManager downloadManager;
     private boolean isDownloading =false;
 
-    private SharedPreferences sharedPreferences;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,8 +114,6 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         super.onStart();
         presenter.dispatch();
         bt_Download.requestFocus();
-        sharedPreferences = getSharedPreferences(F.sp.video,MODE_PRIVATE);
-        playVideo();
     }
 
     @Override
@@ -243,6 +240,11 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         });
     }
 
+    @Override
+    public void loadVideo(VideoInfo videoInfo) {
+        playVideo(videoInfo.getMd5());
+    }
+
     @OnClick({R.id.bt_link1_1, R.id.bt_link2_1, R.id.bt_link3_1, R.id.bt_link4_1, R.id.bt_link5_1, R.id.bt_Download})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -335,19 +337,17 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         }
     }
 
-    private boolean isVideoCanPlay(){
-        String md5 = Application.getVideoMd5();
+    private boolean isVideoCanPlay(String videoMD5){
         String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
-        Logger.d(md5);
-        if(localMD5.equals(md5)){
+        if(localMD5.equals(videoMD5)){
             return true;
         }else{
             return false;
         }
     }
 
-    private void playVideo() {
-        if(isVideoCanPlay()){
+    private void playVideo(final String videoMD5) {
+        if(isVideoCanPlay(videoMD5)){
             videoView1.setVideoPath(F.path.video+"btvi3.mp4");
         }else {
             videoView1.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
@@ -361,7 +361,7 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         videoView1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if(isVideoCanPlay()){
+                if(isVideoCanPlay(videoMD5)){
                     videoView1.setVideoPath(F.path.video+"btvi3.mp4");
                 }else {
                     videoView1.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
