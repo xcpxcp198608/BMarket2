@@ -144,7 +144,7 @@ public class DownloadManager {
                                 time = System.currentTimeMillis();
                                 progress = (int) (completed * 100L / downloadInfo.getFileLength());
                                 handler.obtainMessage(MSG_PROGRESS, progress).sendToTarget();
-                                Log.d("----px----",downloadInfo.getFileName()+progress);
+                                Log.d("----px----",downloadInfo.getFileName()+"---"+progress);
                             }
                             if (pauseDownload) {
                                 Log.d("----px----",downloadInfo.getFileName()+"pause");

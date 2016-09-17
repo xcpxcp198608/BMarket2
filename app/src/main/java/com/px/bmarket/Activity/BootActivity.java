@@ -159,6 +159,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
                         appInfo.setIsDisplay(jsonObject.getString("isDisplay"));
                         appInfo.setApkVersionCode(jsonObject.getInt("apkVersionCode"));
                         appInfo.setSequence(jsonObject.getInt("sequence"));
+//                        Logger.d(appInfo.toString());
                         sqliteDao.insertOrUpdateData(appInfo);
                     }
                     } catch (JSONException e) {
