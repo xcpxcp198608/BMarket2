@@ -28,6 +28,7 @@ public class Application extends android.app.Application {
     private static RequestQueue requestQueue;
     private boolean isDownloading = false;
     private DownloadManager downloadManager;
+    private static String videoMD5;
 
     @Override
     public void onCreate() {
@@ -37,6 +38,10 @@ public class Application extends android.app.Application {
         editor = sharedPreferences.edit();
 
         loadVideoInfo();
+    }
+
+    public static String getVideoMd5(){
+        return videoMD5;
     }
 
     public static RequestQueue getVolleyRequest(){
@@ -53,6 +58,7 @@ public class Application extends android.app.Application {
                     videoInfo.setVideoUrl(jsonObject.getString("videoUrl"));
                     videoInfo.setVersion(jsonObject.getInt("version"));
                     videoInfo.setMd5(jsonObject.getString("md5"));
+                    videoMD5 = videoInfo.getMd5();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -72,23 +78,17 @@ public class Application extends android.app.Application {
         Logger.d(videoInfo.toString());
         int localVersion = sharedPreferences.getInt("version" ,0);
         isDownloading = sharedPreferences.getBoolean("isDownloading" ,false);
-        if(!ApkCheck.isFileExists(F.path.video ,"btvi3.mp4") || !isDownloading){
-            Logger.d("1");
-            editor.commit();
+        if(!ApkCheck.isFileExists(F.path.video ,"btvi3.mp4") && !isDownloading){
+            Logger.d("----video is not exists");
             downloadVideo(videoInfo);
-        }else if(videoInfo.getVersion() > localVersion || !isDownloading){
-            Logger.d("2");
-            editor.commit();
+        }else if(videoInfo.getVersion() > localVersion && !isDownloading){
+            Logger.d("----video version need update");
             downloadVideo(videoInfo);
-        }else if(!isFileIntact(videoInfo.getMd5()) || !isDownloading){
-            Logger.d("3");
-            editor.commit();
+        }else if(!isFileIntact(videoInfo.getMd5()) && !isDownloading){
+            Logger.d("----video is not intact");
             downloadVideo(videoInfo);
         }else{
-            editor.clear();
-            editor.putString("md5",videoInfo.getMd5());
-            editor.commit();
-            Logger.d("video no need update");
+            Logger.d("----video no need update");
         }
     }
 
@@ -119,7 +119,6 @@ public class Application extends android.app.Application {
             public void onCompleted(int progress) {
                 Logger.d("video download finish");
                 editor.clear();
-                editor.putString("md5",videoInfo.getMd5());
                 editor.putInt("version" ,videoInfo.getVersion());
                 editor.putBoolean("isDownloading" ,false);
                 editor.commit();
@@ -135,4 +134,5 @@ public class Application extends android.app.Application {
             return false;
         }
     }
+
 }

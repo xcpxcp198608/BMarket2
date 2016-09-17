@@ -38,7 +38,7 @@ public class MD5 {
             return null;
         }
         BigInteger bigInt = new BigInteger(1, digest.digest());
-        Log.d("----px----" ,bigInt.toString(16));
+        Log.d("----px----" ,"---->"+bigInt.toString(16));
         return bigInt.toString(16);
     }
 }

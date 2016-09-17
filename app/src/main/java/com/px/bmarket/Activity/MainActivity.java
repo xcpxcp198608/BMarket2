@@ -22,6 +22,7 @@ import com.px.bmarket.Adapter.AppTypeAdapter;
 import com.px.bmarket.Adapter.AppsAdapter;
 import com.px.bmarket.Adapter.RollViewAdapter;
 import com.px.bmarket.Animator.Animator;
+import com.px.bmarket.Application;
 import com.px.bmarket.Beans.AppInfo;
 import com.px.bmarket.Beans.ButtonInfo;
 import com.px.bmarket.Beans.MarqueeInfo;
@@ -295,7 +296,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     }
 
     private boolean isVideoCanPlay(){
-        String md5 = sharedPreferences.getString("md5","1");
+        String md5 = Application.getVideoMd5();
         String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
         Logger.d(md5);
         if(localMD5.equals(md5)){
