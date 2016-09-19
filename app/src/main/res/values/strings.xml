@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bmarket</string>
+    <string name="app_name">AppMarket</string>
     <string name="text_recommend">Recommend</string>
     <string name="text_video">Video</string>
     <string name="text_game">Games</string>

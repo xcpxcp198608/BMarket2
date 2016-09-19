@@ -315,6 +315,9 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
                     bt_Download.setBackgroundResource(R.drawable.button_blue);
                     tv_Progress1.setVisibility(View.GONE);
                     pb_DownloadProgress.setVisibility(View.GONE);
+                    if(ApkCheck.isApkCanInstalled(DownloadActivity.this,F.path.apps,appInfo.getApkFileName())){
+                        ApkInstall.installApk(DownloadActivity.this ,F.path.apps ,appInfo.getApkFileName());
+                    }
                 }
             });
         }

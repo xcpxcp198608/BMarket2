@@ -12,9 +12,9 @@ public final class F {
     }
 
     public static final class path{
-        public static final String video = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BMarket/Video/";
-        public static final String market = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BMarket/Market/";
-        public static final String apps = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BMarket/Apps/";
+        public static final String video = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BMarket/";
+        public static final String market = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BMarket/";
+        public static final String apps = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BMarket/";
     }
 
     public static final class url{

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.px.bmarket.Application;
 import com.px.bmarket.Beans.AppInfo;
 import com.px.bmarket.Beans.AppMarketInfo;
+import com.px.bmarket.Data.IAppService;
 import com.px.bmarket.F;
 import com.px.bmarket.FileDownload.DownloadFileInfo;
 import com.px.bmarket.FileDownload.DownloadManager;
@@ -33,9 +35,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.functions.Action1;
 
 
 public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresenter> implements IBootActivity {
@@ -53,7 +66,6 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
 
     private AppMarketInfo mAppMarketInfo;
     private DownloadManager downloadManager;
-    private boolean load= false;
     private SQLiteDao sqliteDao;
 
     @Override
@@ -127,7 +139,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     public void checkUpdate(AppMarketInfo appMarketInfo) {
         int localVerCode = ApkCheck.getInstalledApkVersionCode(BootActivity.this, getPackageName());
         if (localVerCode >= appMarketInfo.getApkVersionCode()) {
-            loadApp();
+            loadApp1();
         } else {
             ll_Update.setVisibility(View.VISIBLE);
             tv_UpdateMessage.setText(appMarketInfo.getApkUpdateInfo());
@@ -159,7 +171,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
                         appInfo.setIsDisplay(jsonObject.getString("isDisplay"));
                         appInfo.setApkVersionCode(jsonObject.getInt("apkVersionCode"));
                         appInfo.setSequence(jsonObject.getInt("sequence"));
-//                        Logger.d(appInfo.toString());
+                        Logger.d(appInfo.toString());
                         sqliteDao.insertOrUpdateData(appInfo);
                     }
                     } catch (JSONException e) {
@@ -177,6 +189,39 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
         });
         jsonArrayRequest.setTag("AppInfo");
         Application.getVolleyRequest().add(jsonArrayRequest);
+    }
+
+    public void loadApp1(){
+        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
+        okHttpClient.connectTimeout(30, TimeUnit.SECONDS);
+        new  Retrofit.Builder().baseUrl("http://158.69.229.104:8092/")
+                .client(okHttpClient.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(IAppService.class)
+                .getData()
+                .enqueue(new Callback<List<AppInfo>>() {
+                    @Override
+                    public void onResponse(Call<List<AppInfo>> call, Response<List<AppInfo>> response) {
+                        if(response.body().size()>0){
+                            Observable.from(response.body())
+                                    .subscribe(new Action1<AppInfo>() {
+                                        @Override
+                                        public void call(AppInfo appInfo) {
+                                            Logger.d(appInfo.toString());
+                                            sqliteDao.insertOrUpdateData(appInfo);
+                                        }
+                                    });
+                            startActivity(new Intent(BootActivity.this ,MainActivity.class));
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<AppInfo>> call, Throwable t) {
+
+                    }
+                });
     }
 
     @OnClick(R.id.bt_UpdateConfirm)

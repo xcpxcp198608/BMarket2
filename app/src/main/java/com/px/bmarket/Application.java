@@ -72,12 +72,12 @@ public class Application extends android.app.Application {
         Logger.d(videoInfo.toString());
         int localVersion = sharedPreferences.getInt("version" ,0);
         isDownloading = sharedPreferences.getBoolean("isDownloading" ,false);
-        if(!ApkCheck.isFileExists(F.path.video ,"btvi3.mp4") && !isDownloading){
+        if(!ApkCheck.isFileExists(F.path.video ,"btvi3.mp4")){
             downloadVideo(videoInfo);
-        }else if(videoInfo.getVersion() > localVersion && !isDownloading){
+        }else if(videoInfo.getVersion() > localVersion){
             Logger.d("----video version need update");
             downloadVideo(videoInfo);
-        }else if(!isFileIntact(videoInfo.getMd5()) && !isDownloading){
+        }else if(!isFileIntact(videoInfo.getMd5())){
             Logger.d("----video is not intact");
             downloadVideo(videoInfo);
         }else{
@@ -130,5 +130,4 @@ public class Application extends android.app.Application {
             return false;
         }
     }
-
 }
