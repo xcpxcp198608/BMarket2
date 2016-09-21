@@ -106,13 +106,12 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
             tv_AppLanuage.setText(getString(R.string.text_language)+appInfo.getApkLanguage());
             tv_AppSummary.setText(appInfo.getApkSummary());
         }
-
+        presenter.dispatch();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.dispatch();
         bt_Download.requestFocus();
     }
 
