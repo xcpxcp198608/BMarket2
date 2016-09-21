@@ -85,13 +85,13 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         sqLiteDao = SQLiteDao.getInstance(MainActivity.this);
         appTypeAdapter = new AppTypeAdapter(MainActivity.this);
         lv_AppType.setAdapter(appTypeAdapter);
+        showRecommendApp();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         presenter.dispatch();
-        showRecommendApp();
         lv_AppType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
