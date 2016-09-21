@@ -6,11 +6,16 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -30,6 +35,12 @@ import com.px.bmarket.Beans.RollImageInfo;
 import com.px.bmarket.Beans.VideoInfo;
 import com.px.bmarket.CustomView.MarqueeView;
 import com.px.bmarket.F;
+import com.px.bmarket.Fragment.ChatFragment;
+import com.px.bmarket.Fragment.GameFragment;
+import com.px.bmarket.Fragment.MusicFragment;
+import com.px.bmarket.Fragment.RecommendFragment;
+import com.px.bmarket.Fragment.ToolFragment;
+import com.px.bmarket.Fragment.VideoFragment;
 import com.px.bmarket.Presenter.MainActivityPresenter;
 import com.px.bmarket.R;
 import com.px.bmarket.SQLite.SQLiteDao;
@@ -38,6 +49,8 @@ import com.px.bmarket.Utils.Logger;
 import com.px.bmarket.Utils.MD5;
 import com.px.bmarket.Utils.SystemConfig;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,8 +67,8 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     ListView lv_AppType;
     @BindView(R.id.tv_Marquee)
     MarqueeView tv_Marquee;
-    @BindView(R.id.gv_Apps)
-    GridView gv_Apps;
+    @BindView(R.id.frameLayout)
+    FrameLayout frameLayout;
     @BindView(R.id.rv_Image)
     RollPagerView rv_Image;
     @BindView(R.id.videoView)
@@ -72,9 +85,21 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     Button bt_Link5;
 
     private AppTypeAdapter appTypeAdapter;
-    private SQLiteDao sqLiteDao;
     private List<ButtonInfo> mButtonInfos;
     private long backExitTime;
+
+    private ChatFragment chatFragment;
+    private GameFragment gameFragment;
+    private MusicFragment musicFragment;
+    private RecommendFragment recommendFragment;
+    private ToolFragment toolFragment;
+    private VideoFragment videoFragment;
+    private final int RECOMMEND_POSITION = 0;
+    private final int VIDEO_POSITION = 1;
+    private final int GAMES_POSITION = 2;
+    private final int CHAT_POSITION = 3;
+    private final int MUSIC_POSITION = 4;
+    private final int TOOL_POSITION = 5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,40 +107,20 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        sqLiteDao = SQLiteDao.getInstance(MainActivity.this);
         appTypeAdapter = new AppTypeAdapter(MainActivity.this);
         lv_AppType.setAdapter(appTypeAdapter);
+        showFragment(RECOMMEND_POSITION);
+        presenter.dispatch();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.dispatch();
-        showRecommendApp();
         lv_AppType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Animator.zoomIn09_10(view);
-                switch (position) {
-                    case 0:
-                        showRecommendApp();
-                        break;
-                    case 1:
-                        showAppByType("movie");
-                        break;
-                    case 2:
-                        showAppByType("game");
-                        break;
-                    case 3:
-                        showAppByType("chat");
-                        break;
-                    case 4:
-                        showAppByType("music");
-                        break;
-                    case 5:
-                        showAppByType("tool");
-                        break;
-                }
+                showFragment(position);
             }
 
             @Override
@@ -127,26 +132,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Animator.zoomIn09_10(view);
-                switch (position) {
-                    case 0:
-                        showRecommendApp();
-                        break;
-                    case 1:
-                        showAppByType("movie");
-                        break;
-                    case 2:
-                        showAppByType("game");
-                        break;
-                    case 3:
-                        showAppByType("chat");
-                        break;
-                    case 4:
-                        showAppByType("music");
-                        break;
-                    case 5:
-                        showAppByType("tool");
-                        break;
-                }
+                showFragment(position);
             }
         });
     }
@@ -156,11 +142,19 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         super.onResume();
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(videoView!=null){
+            videoView.stopPlayback();
+        }
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
         if(videoView!=null){
-            videoView.pause();
             videoView.stopPlayback();
         }
     }
@@ -169,8 +163,85 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     protected void onDestroy() {
         super.onDestroy();
         if(videoView!=null){
-            videoView.pause();
             videoView.stopPlayback();
+        }
+    }
+
+    private void showFragment(int position){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        hideFragment(fragmentTransaction);
+        switch (position) {
+            case RECOMMEND_POSITION:
+                if(recommendFragment == null){
+                    recommendFragment = new RecommendFragment();
+                    fragmentTransaction.add(R.id.frameLayout ,recommendFragment);
+                }else {
+                    fragmentTransaction.show(recommendFragment);
+                }
+                break;
+            case VIDEO_POSITION:
+                if(videoFragment == null){
+                    videoFragment = new VideoFragment();
+                    fragmentTransaction.add(R.id.frameLayout ,videoFragment);
+                }else {
+                    fragmentTransaction.show(videoFragment);
+                }
+                break;
+            case GAMES_POSITION:
+                if(gameFragment == null){
+                    gameFragment = new GameFragment();
+                    fragmentTransaction.add(R.id.frameLayout ,gameFragment);
+                }else {
+                    fragmentTransaction.show(gameFragment);
+                }
+                break;
+            case CHAT_POSITION:
+                if(chatFragment == null){
+                    chatFragment = new ChatFragment();
+                    fragmentTransaction.add(R.id.frameLayout ,chatFragment);
+                }else {
+                    fragmentTransaction.show(chatFragment);
+                }
+                break;
+            case MUSIC_POSITION:
+                if(musicFragment == null){
+                    musicFragment = new MusicFragment();
+                    fragmentTransaction.add(R.id.frameLayout ,musicFragment);
+                }else {
+                    fragmentTransaction.show(musicFragment);
+                }
+                break;
+            case TOOL_POSITION:
+                if(toolFragment == null){
+                    toolFragment = new ToolFragment();
+                    fragmentTransaction.add(R.id.frameLayout ,toolFragment);
+                }else {
+                    fragmentTransaction.show(toolFragment);
+                }
+                break;
+        }
+        fragmentTransaction.commit();
+    }
+
+    private void hideFragment(FragmentTransaction fragmentTransaction){
+        if(recommendFragment != null){
+            fragmentTransaction.hide(recommendFragment);
+        }
+        if(videoFragment != null){
+            fragmentTransaction.hide(videoFragment);
+        }
+        if(gameFragment != null){
+            fragmentTransaction.hide(gameFragment);
+        }
+        if(chatFragment != null){
+            fragmentTransaction.hide(chatFragment);
+        }
+        if(musicFragment != null){
+            fragmentTransaction.hide(musicFragment);
+        }
+        if(toolFragment != null){
+            fragmentTransaction.hide(toolFragment);
         }
     }
 
@@ -271,62 +342,6 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     @Override
     public void loadVideo(VideoInfo videoInfo) {
         playVideo(videoInfo.getMd5());
-    }
-    //显示推荐的APP
-    private void showRecommendApp() {
-        List<AppInfo> list = new ArrayList<>();
-        list = sqLiteDao.queryRecommend();
-        AppsAdapter appsAdapter = new AppsAdapter(MainActivity.this, list);
-        gv_Apps.setAdapter(appsAdapter);
-        gv_Apps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Animator.zoomIn09_10(view);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        final List<AppInfo> finalList = list;
-        gv_Apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AppInfo appInfo = finalList.get(position);
-                Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
-                intent.putExtra("appInfo", appInfo);
-                startActivity(intent);
-            }
-        });
-    }
-    //根据选择的类型显示APP
-    private void showAppByType(String type) {
-        List<AppInfo> list = new ArrayList<>();
-        list = sqLiteDao.queryByType(type);
-        AppsAdapter appsAdapter = new AppsAdapter(MainActivity.this, list);
-        gv_Apps.setAdapter(appsAdapter);
-        gv_Apps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Animator.zoomIn09_10(view);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        final List<AppInfo> finalList = list;
-        gv_Apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AppInfo appInfo = finalList.get(position);
-                Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
-                intent.putExtra("appInfo", appInfo);
-                startActivity(intent);
-            }
-        });
     }
 
     private boolean isVideoCanPlay(String videoMD5){

@@ -106,13 +106,12 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
             tv_AppLanuage.setText(getString(R.string.text_language)+appInfo.getApkLanguage());
             tv_AppSummary.setText(appInfo.getApkSummary());
         }
-
+        presenter.dispatch();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.dispatch();
         bt_Download.requestFocus();
     }
 
@@ -126,7 +125,6 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     protected void onStop() {
         super.onStop();
         if(videoView1!= null) {
-            videoView1.pause();
             videoView1.stopPlayback();
         }
         if(downloadManager!= null){
@@ -138,7 +136,6 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     protected void onDestroy() {
         super.onDestroy();
         if(videoView1!= null) {
-            videoView1.pause();
             videoView1.stopPlayback();
         }
         if(downloadManager!= null){

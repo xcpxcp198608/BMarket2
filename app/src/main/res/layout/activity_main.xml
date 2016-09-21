@@ -186,13 +186,8 @@
 
             </LinearLayout>
 
-            <GridView
-                android:padding="5dp"
-                android:listSelector="@color/colorAlpha0"
-                android:id="@+id/gv_Apps"
-                android:numColumns="8"
-                android:verticalSpacing="5dp"
-                android:horizontalSpacing="5dp"
+            <FrameLayout
+                android:id="@+id/frameLayout"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"/>
