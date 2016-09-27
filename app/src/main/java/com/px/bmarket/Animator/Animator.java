@@ -10,8 +10,8 @@ import android.view.View;
 public class Animator {
 
     public static void zoomIn09_10(View view){
-        ObjectAnimator zX = ObjectAnimator.ofFloat(view,"scaleX" ,0.9f,1.0f);
-        ObjectAnimator zY = ObjectAnimator.ofFloat(view,"scaleY" ,0.9f,1.0f);
+        ObjectAnimator zX = ObjectAnimator.ofFloat(view,"scaleX" ,0.99f,1.0f);
+        ObjectAnimator zY = ObjectAnimator.ofFloat(view,"scaleY" ,0.99f,1.0f);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(zX).with(zY);
         animatorSet.setDuration(150);
