@@ -228,11 +228,11 @@
                     android:layout_height="match_parent">
                     <com.jude.rollviewpager.RollPagerView
                         android:id="@+id/rv_Image_1"
-                        android:focusable="true"
-                        android:clickable="true"
+                        android:focusable="false"
+                        android:clickable="false"
                         android:padding="2dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bg"
+                        android:background="@drawable/btvi3"
                         app:rollviewpager_play_delay="6000"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
