@@ -44,6 +44,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by PX on 2016/9/11.
@@ -75,6 +80,8 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     private SQLiteDao sqLiteDao;
     private List<ButtonInfo> mButtonInfos;
     private long backExitTime;
+    private AppsAdapter appsAdapter;
+    private List<AppInfo> appInfoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,7 +92,9 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         sqLiteDao = SQLiteDao.getInstance(MainActivity.this);
         appTypeAdapter = new AppTypeAdapter(MainActivity.this);
         lv_AppType.setAdapter(appTypeAdapter);
-        showRecommendApp();
+        appInfoList = sqLiteDao.queryRecommend();
+        appsAdapter = new AppsAdapter(MainActivity.this , appInfoList);
+        gv_Apps.setAdapter(appsAdapter);
         presenter.dispatch();
     }
 
@@ -104,15 +113,18 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
                         showAppByType("movie");
                         break;
                     case 2:
-                        showAppByType("game");
+                        showAppByType("ktv");
                         break;
                     case 3:
-                        showAppByType("chat");
+                        showAppByType("game");
                         break;
                     case 4:
-                        showAppByType("music");
+                        showAppByType("chat");
                         break;
                     case 5:
+                        showAppByType("music");
+                        break;
+                    case 6:
                         showAppByType("tool");
                         break;
                 }
@@ -135,15 +147,18 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
                         showAppByType("movie");
                         break;
                     case 2:
-                        showAppByType("game");
+                        showAppByType("ktv");
                         break;
                     case 3:
-                        showAppByType("chat");
+                        showAppByType("game");
                         break;
                     case 4:
-                        showAppByType("music");
+                        showAppByType("chat");
                         break;
                     case 5:
+                        showAppByType("music");
+                        break;
+                    case 6:
                         showAppByType("tool");
                         break;
                 }
@@ -157,10 +172,17 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if(videoView!=null){
+            videoView.stopPlayback();
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         if(videoView!=null){
-            videoView.pause();
             videoView.stopPlayback();
         }
     }
@@ -274,59 +296,77 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     }
     //显示推荐的APP
     private void showRecommendApp() {
-        List<AppInfo> list = new ArrayList<>();
-        list = sqLiteDao.queryRecommend();
-        AppsAdapter appsAdapter = new AppsAdapter(MainActivity.this, list);
-        gv_Apps.setAdapter(appsAdapter);
-        gv_Apps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Animator.zoomIn09_10(view);
-            }
+        Observable.just("1").subscribeOn(Schedulers.io())
+                .map(new Func1<String, List<AppInfo>>() {
+                    @Override
+                    public List<AppInfo> call(String s) {
+                        return sqLiteDao.queryRecommend();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<AppInfo>>() {
+                    @Override
+                    public void call(final List<AppInfo> appInfoList) {
+                        appsAdapter.refresh(appInfoList);
+                        gv_Apps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                Animator.zoomIn09_10(view);
+                            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
-        final List<AppInfo> finalList = list;
-        gv_Apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AppInfo appInfo = finalList.get(position);
-                Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
-                intent.putExtra("appInfo", appInfo);
-                startActivity(intent);
-            }
-        });
+                            }
+                        });
+                        gv_Apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                AppInfo appInfo = appInfoList.get(position);
+                                Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
+                                intent.putExtra("appInfo", appInfo);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                });
     }
     //根据选择的类型显示APP
-    private void showAppByType(String type) {
-        List<AppInfo> list = new ArrayList<>();
-        list = sqLiteDao.queryByType(type);
-        AppsAdapter appsAdapter = new AppsAdapter(MainActivity.this, list);
-        gv_Apps.setAdapter(appsAdapter);
-        gv_Apps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Animator.zoomIn09_10(view);
-            }
+    private void showAppByType(final String type) {
+        Observable.just(type).subscribeOn(Schedulers.io())
+                .map(new Func1<String, List<AppInfo>>() {
+                    @Override
+                    public List<AppInfo> call(String s) {
+                        return sqLiteDao.queryByType(s);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<AppInfo>>() {
+                    @Override
+                    public void call(final List<AppInfo> appInfoList) {
+                        appsAdapter.refresh(appInfoList);
+                        gv_Apps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                Animator.zoomIn09_10(view);
+                            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
-        final List<AppInfo> finalList = list;
-        gv_Apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AppInfo appInfo = finalList.get(position);
-                Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
-                intent.putExtra("appInfo", appInfo);
-                startActivity(intent);
-            }
-        });
+                            }
+                        });
+                        gv_Apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                AppInfo appInfo = appInfoList.get(position);
+                                Intent intent = new Intent(MainActivity.this, DownloadActivity.class);
+                                intent.putExtra("appInfo", appInfo);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                });
     }
 
     private boolean isVideoCanPlay(String videoMD5){

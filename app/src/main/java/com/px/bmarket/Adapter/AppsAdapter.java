@@ -63,6 +63,11 @@ public class AppsAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void refresh(List<AppInfo> list){
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
     class ViewHolder {
         public TextView textView;
         public ImageView imageView;

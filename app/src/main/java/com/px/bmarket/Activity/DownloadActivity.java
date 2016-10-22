@@ -122,10 +122,17 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if(videoView1!= null) {
+            videoView1.stopPlayback();
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         if(videoView1!= null) {
-            videoView1.pause();
             videoView1.stopPlayback();
         }
         if(downloadManager!= null){

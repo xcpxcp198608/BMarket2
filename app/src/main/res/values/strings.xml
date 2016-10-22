@@ -2,6 +2,7 @@
     <string name="app_name">AppMarket</string>
     <string name="text_recommend">Recommend</string>
     <string name="text_video">Video</string>
+    <string name="text_ktv">Karaoke</string>
     <string name="text_game">Games</string>
     <string name="text_im">IM</string>
     <string name="text_music">Music</string>

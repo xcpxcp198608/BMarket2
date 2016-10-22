@@ -23,10 +23,10 @@ public class AppTypeAdapter extends BaseAdapter {
     public AppTypeAdapter(Context context) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        text = new String[] {context.getString(R.string.text_recommend) ,context.getString(R.string.text_video)
+        text = new String[] {context.getString(R.string.text_recommend) ,context.getString(R.string.text_video),context.getString(R.string.text_ktv)
                 ,context.getString(R.string.text_game),context.getString(R.string.text_im)
                 ,context.getString(R.string.text_music),context.getString(R.string.text_tools)};
-        resId = new int[]{R.drawable.recommend,R.drawable.video,R.drawable.game,R.drawable.im,R.drawable.music,R.drawable.tools};
+        resId = new int[]{R.drawable.recommend,R.drawable.video,R.drawable.music,R.drawable.game,R.drawable.im,R.drawable.music,R.drawable.tools};
     }
 
     @Override
