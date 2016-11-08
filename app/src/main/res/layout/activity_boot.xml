@@ -12,7 +12,7 @@
 
         <ImageView
             android:background="@color/colorMain"
-            android:src="@drawable/marketicon"
+            android:src="@drawable/marketicon1"
             android:scaleType="center"
             android:layout_weight="1"
             android:layout_width="match_parent"

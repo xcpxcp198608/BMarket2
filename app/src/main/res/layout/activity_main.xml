@@ -28,90 +28,90 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
 
-        <com.dd.ShadowLayout
-            app:sl_shadowColor="@color/colorBlackA"
-            app:sl_shadowRadius="5dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_gravity="bottom"
-            android:layout_height="45dp">
-            <Button
-                android:id="@+id/bt_link1"
-                android:textSize="18sp"
-                android:textColor="@color/colorWhite"
-                android:textAllCaps="false"
-                android:background="@drawable/button_blue"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </com.dd.ShadowLayout>
+            <com.dd.ShadowLayout
+                app:sl_shadowColor="@color/colorBlackA"
+                app:sl_shadowRadius="5dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_gravity="bottom"
+                android:layout_height="45dp">
+                <Button
+                    android:id="@+id/bt_link1"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorWhite"
+                    android:textAllCaps="false"
+                    android:background="@drawable/button_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.dd.ShadowLayout>
 
-        <com.dd.ShadowLayout
-            app:sl_shadowColor="@color/colorBlackA"
-            app:sl_shadowRadius="5dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="45dp">
-            <Button
-                android:id="@+id/bt_link2"
-                android:textSize="18sp"
-                android:textColor="@color/colorWhite"
-                android:textAllCaps="false"
-                android:background="@drawable/button_blue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.dd.ShadowLayout>
+            <com.dd.ShadowLayout
+                app:sl_shadowColor="@color/colorBlackA"
+                app:sl_shadowRadius="5dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="45dp">
+                <Button
+                    android:id="@+id/bt_link2"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorWhite"
+                    android:textAllCaps="false"
+                    android:background="@drawable/button_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.dd.ShadowLayout>
 
-        <com.dd.ShadowLayout
-            app:sl_shadowColor="@color/colorBlackA"
-            app:sl_shadowRadius="5dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="45dp">
-            <Button
-                android:id="@+id/bt_link3"
-                android:textSize="18sp"
-                android:textColor="@color/colorWhite"
-                android:textAllCaps="false"
-                android:background="@drawable/button_blue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.dd.ShadowLayout>
+            <com.dd.ShadowLayout
+                app:sl_shadowColor="@color/colorBlackA"
+                app:sl_shadowRadius="5dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="45dp">
+                <Button
+                    android:id="@+id/bt_link3"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorWhite"
+                    android:textAllCaps="false"
+                    android:background="@drawable/button_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.dd.ShadowLayout>
 
-        <com.dd.ShadowLayout
-            app:sl_shadowColor="@color/colorBlackA"
-            app:sl_shadowRadius="5dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="45dp">
-            <Button
-                android:id="@+id/bt_link4"
-                android:textSize="18sp"
-                android:textColor="@color/colorWhite"
-                android:textAllCaps="false"
-                android:background="@drawable/button_blue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.dd.ShadowLayout>
+            <com.dd.ShadowLayout
+                app:sl_shadowColor="@color/colorBlackA"
+                app:sl_shadowRadius="5dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="45dp">
+                <Button
+                    android:id="@+id/bt_link4"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorWhite"
+                    android:textAllCaps="false"
+                    android:background="@drawable/button_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.dd.ShadowLayout>
 
-        <com.dd.ShadowLayout
-            app:sl_shadowColor="@color/colorBlackA"
-            app:sl_shadowRadius="5dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="45dp">
-            <Button
-                android:id="@+id/bt_link5"
-                android:textSize="18sp"
-                android:textColor="@color/colorWhite"
-                android:textAllCaps="false"
-                android:background="@drawable/button_blue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.dd.ShadowLayout>
+            <com.dd.ShadowLayout
+                app:sl_shadowColor="@color/colorBlackA"
+                app:sl_shadowRadius="5dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="45dp">
+                <Button
+                    android:id="@+id/bt_link5"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorWhite"
+                    android:textAllCaps="false"
+                    android:background="@drawable/button_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.dd.ShadowLayout>
         </LinearLayout>
     </LinearLayout>
 
@@ -176,11 +176,11 @@
                         android:clickable="true"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-                    <VideoView
-                        android:layout_gravity="center"
-                        android:id="@+id/videoView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        <VideoView
+                            android:layout_gravity="center"
+                            android:id="@+id/videoView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
                     </LinearLayout>
                 </com.dd.ShadowLayout>
 
