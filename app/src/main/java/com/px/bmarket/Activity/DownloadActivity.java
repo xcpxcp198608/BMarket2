@@ -176,7 +176,7 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         rv_Image1.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                SystemConfig.openBrowserByUrl(DownloadActivity.this, rollImageInfos.get(position).getLinkUrl());
+                SystemConfig.openBrowserByUrl(DownloadActivity.this, rollImageInfos.get(position).getLink());
             }
         });
     }
@@ -189,8 +189,7 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         tv_Marquee1.setText("                                                                         " +
                 "                                                                                    " +
                 "                                                                                    " +
-                "                         " +marqueeInfo.getText());
-        tv_Marquee1.setTextColor(Color.rgb(marqueeInfo.getColorR(),marqueeInfo.getColorG() ,marqueeInfo.getColorB()));
+                "                         " +marqueeInfo.getContent());
     }
 
     @Override

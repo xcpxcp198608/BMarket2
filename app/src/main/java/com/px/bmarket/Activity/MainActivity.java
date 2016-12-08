@@ -220,7 +220,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         rv_Image.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                SystemConfig.openBrowserByUrl(MainActivity.this, rollImageInfos.get(position).getLinkUrl());
+                SystemConfig.openBrowserByUrl(MainActivity.this, rollImageInfos.get(position).getLink());
             }
         });
     }
@@ -233,8 +233,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         tv_Marquee.setText("                                                                         " +
                 "                                                                                    " +
                 "                                                                                    " +
-                "                         " +marqueeInfo.getText());
-        tv_Marquee.setTextColor(Color.rgb(marqueeInfo.getColorR(),marqueeInfo.getColorG() ,marqueeInfo.getColorB()));
+                "                         " +marqueeInfo.getContent());
     }
 
     @Override

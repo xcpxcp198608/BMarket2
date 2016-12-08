@@ -36,8 +36,10 @@ public class RollImageData implements IRollImageData {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject j = jsonArray.getJSONObject(i);
                             RollImageInfo r = new RollImageInfo();
-                            r.setImageUrl(j.getString("imageUrl"));
-                            r.setLinkUrl(j.getString("linkUrl"));
+                            r.setId(j.getInt("id"));
+                            r.setName(j.getString("name"));
+                            r.setUrl(j.getString("url"));
+                            r.setLink(j.getString("link"));
                             list.add(r);
                         }
                         onCompletedListener.onCompleted(list);

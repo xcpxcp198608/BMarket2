@@ -301,6 +301,7 @@
         <com.px.bmarket.CustomView.MarqueeView
             android:id="@+id/tv_Marquee_1"
             android:textSize="19sp"
+            android:textColor="@color/colorWhite"
             android:singleLine="true"
             android:gravity="center_vertical"
             android:ellipsize="marquee"

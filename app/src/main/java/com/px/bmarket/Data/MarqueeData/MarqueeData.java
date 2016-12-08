@@ -29,10 +29,8 @@ public class MarqueeData implements IMarqueeData {
             public void onResponse(JSONObject jsonObject) {
                 MarqueeInfo marqueeInfo = new MarqueeInfo();
                 try {
-                    marqueeInfo.setText(jsonObject.getString("text"));
-                    marqueeInfo.setColorR(jsonObject.getInt("colorR"));
-                    marqueeInfo.setColorG(jsonObject.getInt("colorG"));
-                    marqueeInfo.setColorB(jsonObject.getInt("colorB"));
+                    marqueeInfo.setId(jsonObject.getInt("id"));
+                    marqueeInfo.setContent(jsonObject.getString("content"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

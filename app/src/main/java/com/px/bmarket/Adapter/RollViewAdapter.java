@@ -35,7 +35,7 @@ public class RollViewAdapter extends StaticPagerAdapter {
         imageView.setFocusable(true);
         imageView.setClickable(true);
         Picasso.with(container.getContext())
-                .load(list.get(position).getImageUrl())
+                .load(list.get(position).getUrl())
                 .placeholder(R.drawable.btvi3_normal)
                 .error(R.drawable.btvi3_normal)
                 .into(imageView);
@@ -52,7 +52,7 @@ public class RollViewAdapter extends StaticPagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                container.getContext().startActivity(new Intent(Intent.ACTION_VIEW , Uri.parse(list.get(position).getLinkUrl())));
+                container.getContext().startActivity(new Intent(Intent.ACTION_VIEW , Uri.parse(list.get(position).getLink())));
             }
         });
         return imageView;
