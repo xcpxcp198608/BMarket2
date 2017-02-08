@@ -194,7 +194,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     public void loadApp1(){
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
         okHttpClient.connectTimeout(30, TimeUnit.SECONDS);
-        new  Retrofit.Builder().baseUrl("http://158.69.229.104:8092/")
+        new  Retrofit.Builder().baseUrl(F.url.base_url)
                 .client(okHttpClient.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -219,7 +219,8 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
 
                     @Override
                     public void onFailure(Call<List<AppInfo>> call, Throwable t) {
-
+                        startActivity(new Intent(BootActivity.this ,MainActivity.class));
+                        finish();
                     }
                 });
     }
