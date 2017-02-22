@@ -33,6 +33,7 @@ import com.px.bmarket.R;
 import com.px.bmarket.Utils.ApkCheck;
 import com.px.bmarket.Utils.ApkInstall;
 import com.px.bmarket.Utils.ApkLaunch;
+import com.px.bmarket.Utils.FileCheck;
 import com.px.bmarket.Utils.Logger;
 import com.px.bmarket.Utils.MD5;
 import com.px.bmarket.Utils.SystemConfig;
@@ -347,7 +348,7 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
 
     private boolean isVideoCanPlay(String videoMD5){
         String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
-        if(localMD5.equals(videoMD5)){
+        if(localMD5.equalsIgnoreCase(videoMD5)){
             return true;
         }else{
             return false;

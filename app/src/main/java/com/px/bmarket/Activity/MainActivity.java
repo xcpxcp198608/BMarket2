@@ -370,7 +370,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
 
     private boolean isVideoCanPlay(String videoMD5){
         String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
-        if(localMD5.equals(videoMD5)){
+        if(localMD5.equalsIgnoreCase(videoMD5)){
             return true;
         }else{
             return false;
