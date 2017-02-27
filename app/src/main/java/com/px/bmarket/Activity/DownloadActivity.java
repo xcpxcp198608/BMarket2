@@ -39,6 +39,7 @@ import com.px.bmarket.Utils.MD5;
 import com.px.bmarket.Utils.SystemConfig;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -275,6 +276,8 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
                 String bt_Text = bt_Download.getText().toString().trim();
                 if(getString(R.string.text_download).equals(bt_Text)){
                     downloadApp();
+                }else if(getString(R.string.text_update).equals(bt_Text)){
+                    downloadApp();
                 }else if(getString(R.string.text_downloading).equals(bt_Text)){
 
                 }else if(getString(R.string.text_install).equals(bt_Text)){
@@ -341,6 +344,12 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
             }else {
                 bt_Download.setText(getString(R.string.text_launch));
                 bt_Download.setBackgroundResource(R.drawable.button_green);
+                if(ApkCheck.isFileExists(F.path.apps,appInfo.getApkFileName())){
+                    File file = new File(F.path.apps,appInfo.getApkFileName());
+                    if(file.exists()){
+                        file.delete();
+                    }
+                }
             }
         }else if(ApkCheck.isFileExists(F.path.apps ,appInfo.getApkFileName())
                 && ApkCheck.isApkCanInstalled(DownloadActivity.this ,F.path.apps ,appInfo.getApkFileName())){
