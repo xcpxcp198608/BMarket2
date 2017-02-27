@@ -353,7 +353,14 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
             }
         }else if(ApkCheck.isFileExists(F.path.apps ,appInfo.getApkFileName())
                 && ApkCheck.isApkCanInstalled(DownloadActivity.this ,F.path.apps ,appInfo.getApkFileName())){
-            bt_Download.setText(getString(R.string.text_install));
+            int localCode = ApkCheck.getApkFileVersionCode(DownloadActivity.this ,F.path.apps ,appInfo.getApkFileName());
+            boolean isNeedUpdate = appInfo.getApkVersionCode() > localCode;
+            if(isNeedUpdate){
+                bt_Download.setText(getString(R.string.text_update));
+                bt_Download.setBackgroundResource(R.drawable.button_blue);
+            }else {
+                bt_Download.setText(getString(R.string.text_install));
+            }
             bt_Download.setBackgroundResource(R.drawable.button_blue);
         }else if(isDownloading){
             bt_Download.setText(getString(R.string.text_downloading));
