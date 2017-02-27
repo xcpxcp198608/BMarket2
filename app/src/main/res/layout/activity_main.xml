@@ -80,6 +80,7 @@
             </com.dd.ShadowLayout>
 
             <com.dd.ShadowLayout
+                android:visibility="gone"
                 app:sl_shadowColor="@color/colorBlackA"
                 app:sl_shadowRadius="5dp"
                 android:layout_gravity="bottom"

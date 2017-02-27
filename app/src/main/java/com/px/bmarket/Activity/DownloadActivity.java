@@ -98,7 +98,9 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         ButterKnife.bind(this);
         appInfo = getIntent().getParcelableExtra("appInfo");
         if(appInfo!= null){
-            Picasso.with(DownloadActivity.this).load(appInfo.getApkIconUrl()).placeholder(R.drawable.loading).error(R.drawable.error)
+            Picasso.with(DownloadActivity.this).load(appInfo.getApkIconUrl())
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
                     .into(iv_AppIcon);
             tv_AppName.setText(appInfo.getApkName());
             tv_AppType.setText(getString(R.string.text_type)+appInfo.getApkType());
@@ -331,8 +333,15 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
 
     private void setButtonStatus(){
         if(ApkCheck.isApkInstalled(DownloadActivity.this ,appInfo.getApkPackageName())){
-            bt_Download.setText(getString(R.string.text_launch));
-            bt_Download.setBackgroundResource(R.drawable.button_green);
+            int localCode = ApkCheck.getInstalledApkVersionCode(DownloadActivity.this , appInfo.getApkPackageName());
+            boolean isNeedUpdate = appInfo.getApkVersionCode() > localCode;
+            if(isNeedUpdate){
+                bt_Download.setText(getString(R.string.text_update));
+                bt_Download.setBackgroundResource(R.drawable.button_blue);
+            }else {
+                bt_Download.setText(getString(R.string.text_launch));
+                bt_Download.setBackgroundResource(R.drawable.button_green);
+            }
         }else if(ApkCheck.isFileExists(F.path.apps ,appInfo.getApkFileName())
                 && ApkCheck.isApkCanInstalled(DownloadActivity.this ,F.path.apps ,appInfo.getApkFileName())){
             bt_Download.setText(getString(R.string.text_install));
