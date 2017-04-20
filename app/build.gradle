@@ -3,14 +3,14 @@ apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "24.0.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.px.bmarket"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 16
-        versionName "2.2"
+        versionCode 17
+        versionName "2.3"
     }
     buildTypes {
         release {
