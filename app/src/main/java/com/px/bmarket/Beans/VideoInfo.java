@@ -6,37 +6,33 @@ import com.google.gson.annotations.SerializedName;
  * Created by PX on 2016/9/11.
  */
 public class VideoInfo {
-    @SerializedName("videoFileName")
-    private String videoFileName;
-    @SerializedName("videoUrl")
-    private String videoUrl;
-    @SerializedName("version")
-    private int version;
-    @SerializedName("md5")
+    private int id;
+    private String name;
+    private String url;
     private String md5;
 
-    public String getVideoFileName() {
-        return videoFileName;
+    public int getId() {
+        return id;
     }
 
-    public void setVideoFileName(String videoFileName) {
-        this.videoFileName = videoFileName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getName() {
+        return name;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getVersion() {
-        return version;
+    public String getUrl() {
+        return url;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getMd5() {
@@ -50,9 +46,9 @@ public class VideoInfo {
     @Override
     public String toString() {
         return "VideoInfo{" +
-                "videoFileName='" + videoFileName + '\'' +
-                ", videoUrl='" + videoUrl + '\'' +
-                ", version=" + version +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
                 ", md5='" + md5 + '\'' +
                 '}';
     }

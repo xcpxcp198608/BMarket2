@@ -55,8 +55,8 @@ public class AppsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         AppInfo appInfo = list.get(position);
-        viewHolder.textView.setText(appInfo.getApkName());
-        Picasso.with(context).load(appInfo.getApkIconUrl())
+        viewHolder.textView.setText(appInfo.getName());
+        Picasso.with(context).load(appInfo.getIcon())
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.error)
                 .into(viewHolder.imageView);

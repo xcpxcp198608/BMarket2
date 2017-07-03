@@ -99,16 +99,16 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         ButterKnife.bind(this);
         appInfo = getIntent().getParcelableExtra("appInfo");
         if(appInfo!= null){
-            Picasso.with(DownloadActivity.this).load(appInfo.getApkIconUrl())
+            Picasso.with(DownloadActivity.this).load(appInfo.getIcon())
                     .placeholder(R.drawable.loading)
                     .error(R.drawable.error)
                     .into(iv_AppIcon);
-            tv_AppName.setText(appInfo.getApkName());
-            tv_AppType.setText(getString(R.string.text_type)+appInfo.getApkType());
-            tv_AppSize.setText(getString(R.string.text_size)+appInfo.getApkSize()+"Mb");
-            tv_AppVersion.setText(getString(R.string.text_version)+appInfo.getApkVersion());
-            tv_AppLanuage.setText(getString(R.string.text_language)+appInfo.getApkLanguage());
-            tv_AppSummary.setText(appInfo.getApkSummary());
+            tv_AppName.setText(appInfo.getName());
+            tv_AppType.setText(getString(R.string.text_type)+appInfo.getType());
+            tv_AppSize.setText(getString(R.string.text_size)+appInfo.getSize()+"Mb");
+            tv_AppVersion.setText(getString(R.string.text_version)+appInfo.getVersion());
+            tv_AppLanuage.setText(getString(R.string.text_language)+appInfo.getLanguage());
+            tv_AppSummary.setText(appInfo.getSummary());
         }
         presenter.dispatch();
     }
@@ -281,11 +281,11 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
                 }else if(getString(R.string.text_downloading).equals(bt_Text)){
 
                 }else if(getString(R.string.text_install).equals(bt_Text)){
-                    if(ApkCheck.isApkCanInstalled(DownloadActivity.this,F.path.apps,appInfo.getApkFileName())){
-                        ApkInstall.installApk(DownloadActivity.this ,F.path.apps ,appInfo.getApkFileName());
+                    if(ApkCheck.isApkCanInstalled(DownloadActivity.this,F.path.apps,appInfo.getPackageName()+".apk")){
+                        ApkInstall.installApk(DownloadActivity.this ,F.path.apps ,appInfo.getPackageName()+".apk");
                     }
                 }else if(getString(R.string.text_launch).equals(bt_Text)){
-                    ApkLaunch.launchApkByPackageName(DownloadActivity.this,appInfo.getApkPackageName());
+                    ApkLaunch.launchApkByPackageName(DownloadActivity.this,appInfo.getPackageName());
                 }
                 break;
         }
@@ -295,8 +295,8 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         if(downloadManager == null){
             downloadManager = new DownloadManager(DownloadActivity.this);
             DownloadFileInfo downloadFileInfo = new DownloadFileInfo();
-            downloadFileInfo.setFileFullName(appInfo.getApkFileName());
-            downloadFileInfo.setFileDownloadUrl(appInfo.getApkDownloadUrl());
+            downloadFileInfo.setFileFullName(appInfo.getPackageName()+".apk");
+            downloadFileInfo.setFileDownloadUrl(appInfo.getUrl());
             downloadManager.startDownload(downloadFileInfo , F.path.apps);
             downloadManager.setDownloadStatusListener(new DownloadStatusListener() {
                 @Override
@@ -326,8 +326,8 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
                     bt_Download.setBackgroundResource(R.drawable.button_blue);
                     tv_Progress1.setVisibility(View.GONE);
                     pb_DownloadProgress.setVisibility(View.GONE);
-                    if(ApkCheck.isApkCanInstalled(DownloadActivity.this,F.path.apps,appInfo.getApkFileName())){
-                        ApkInstall.installApk(DownloadActivity.this ,F.path.apps ,appInfo.getApkFileName());
+                    if(ApkCheck.isApkCanInstalled(DownloadActivity.this,F.path.apps,appInfo.getPackageName()+".apk")){
+                        ApkInstall.installApk(DownloadActivity.this ,F.path.apps ,appInfo.getPackageName()+".apk");
                     }
                 }
             });
@@ -335,26 +335,26 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     }
 
     private void setButtonStatus(){
-        if(ApkCheck.isApkInstalled(DownloadActivity.this ,appInfo.getApkPackageName())){
-            int localCode = ApkCheck.getInstalledApkVersionCode(DownloadActivity.this , appInfo.getApkPackageName());
-            boolean isNeedUpdate = appInfo.getApkVersionCode() > localCode;
+        if(ApkCheck.isApkInstalled(DownloadActivity.this ,appInfo.getPackageName())){
+            int localCode = ApkCheck.getInstalledApkVersionCode(DownloadActivity.this , appInfo.getPackageName());
+            boolean isNeedUpdate = appInfo.getCode() > localCode;
             if(isNeedUpdate){
                 bt_Download.setText(getString(R.string.text_update));
                 bt_Download.setBackgroundResource(R.drawable.button_blue);
             }else {
                 bt_Download.setText(getString(R.string.text_launch));
                 bt_Download.setBackgroundResource(R.drawable.button_green);
-                if(ApkCheck.isFileExists(F.path.apps,appInfo.getApkFileName())){
-                    File file = new File(F.path.apps,appInfo.getApkFileName());
+                if(ApkCheck.isFileExists(F.path.apps,appInfo.getPackageName()+".apk")){
+                    File file = new File(F.path.apps,appInfo.getPackageName()+".apk");
                     if(file.exists()){
                         file.delete();
                     }
                 }
             }
-        }else if(ApkCheck.isFileExists(F.path.apps ,appInfo.getApkFileName())
-                && ApkCheck.isApkCanInstalled(DownloadActivity.this ,F.path.apps ,appInfo.getApkFileName())){
-            int localCode = ApkCheck.getApkFileVersionCode(DownloadActivity.this ,F.path.apps ,appInfo.getApkFileName());
-            boolean isNeedUpdate = appInfo.getApkVersionCode() > localCode;
+        }else if(ApkCheck.isFileExists(F.path.apps ,appInfo.getPackageName()+".apk")
+                && ApkCheck.isApkCanInstalled(DownloadActivity.this ,F.path.apps ,appInfo.getPackageName()+".apk")){
+            int localCode = ApkCheck.getApkFileVersionCode(DownloadActivity.this ,F.path.apps ,appInfo.getPackageName()+".apk");
+            boolean isNeedUpdate = appInfo.getCode() > localCode;
             if(isNeedUpdate){
                 bt_Download.setText(getString(R.string.text_update));
                 bt_Download.setBackgroundResource(R.drawable.button_blue);

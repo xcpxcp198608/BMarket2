@@ -22,9 +22,8 @@ public class VideoData implements IVideoData {
             public void onResponse(JSONObject jsonObject) {
                 VideoInfo videoInfo= new VideoInfo();
                 try {
-                    videoInfo.setVideoFileName(jsonObject.getString("videoFileName"));
-                    videoInfo.setVideoUrl(jsonObject.getString("videoUrl"));
-                    videoInfo.setVersion(jsonObject.getInt("version"));
+                    videoInfo.setName(jsonObject.getString("videoFileName"));
+                    videoInfo.setUrl(jsonObject.getString("videoUrl"));
                     videoInfo.setMd5(jsonObject.getString("md5"));
 //                    Logger.d(videoInfo.toString());
                 } catch (JSONException e) {

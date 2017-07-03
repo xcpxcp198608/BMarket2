@@ -49,9 +49,8 @@ public class Application extends android.app.Application {
             public void onResponse(JSONObject jsonObject) {
                 VideoInfo videoInfo = new VideoInfo();
                 try {
-                    videoInfo.setVideoFileName(jsonObject.getString("videoFileName"));
-                    videoInfo.setVideoUrl(jsonObject.getString("videoUrl"));
-                    videoInfo.setVersion(jsonObject.getInt("version"));
+                    videoInfo.setName(jsonObject.getString("name"));
+                    videoInfo.setUrl(jsonObject.getString("url"));
                     videoInfo.setMd5(jsonObject.getString("md5"));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -85,7 +84,7 @@ public class Application extends android.app.Application {
         if(downloadManager==null){
             downloadManager = DownloadManager.getInstance(getApplicationContext());
         }
-        downloadManager.startDownload(videoInfo.getVideoFileName(),videoInfo.getVideoUrl(),F.path.video);
+        downloadManager.startDownload(videoInfo.getName(),videoInfo.getUrl(),F.path.video);
         downloadManager.setOnDownloadListener(new OnDownloadListener() {
             @Override
             public void onStart(int progress, boolean isStart) {
@@ -108,7 +107,6 @@ public class Application extends android.app.Application {
             public void onCompleted(int progress) {
                 Logger.d("video download finish");
                 editor.clear();
-                editor.putInt("version" ,videoInfo.getVersion());
                 editor.putBoolean("isDownloading" ,false);
                 editor.commit();
             }

@@ -11,10 +11,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME ="AppInfo.db";
     public static final String TABLE_NAME = "AppInfo";
     private static final String CREATE_TABLE = "create table if not exists "+TABLE_NAME+"(_id integer primary key autoincrement" +
-            ",apkName text,apkFileName text,apkPackageName text,apkIconUrl text,apkDownloadUrl text,apkVersion text,apkSize text" +
-            ",apkType text,apkLanguage text,apkSummary text,isRecommend text,isDisplay text,apkVersionCode integer,sequence integer)";
+            ", sequence integer, name text, packageName text,url text,icon text,size text, version text,code integer" +
+            ",type text,language text,recommend text,display text, summary text)";
     private static final String DROP_TABLE = "drop table if exists "+TABLE_NAME;
-    private static final int VERSION = 1;
+    private static final int VERSION = 4;
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }

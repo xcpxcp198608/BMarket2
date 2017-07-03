@@ -6,10 +6,17 @@ import com.google.gson.annotations.SerializedName;
  * Created by PX on 2016/9/12.
  */
 public class ButtonInfo {
-    @SerializedName("text")
+    private int id;
     private String text;
-    @SerializedName("url")
     private String url;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getText() {
         return text;
@@ -30,7 +37,8 @@ public class ButtonInfo {
     @Override
     public String toString() {
         return "ButtonInfo{" +
-                "text='" + text + '\'' +
+                "id=" + id +
+                ", text='" + text + '\'' +
                 ", url='" + url + '\'' +
                 '}';
     }

@@ -9,137 +9,28 @@ import com.google.gson.annotations.SerializedName;
  * Created by PX on 2016/9/11.
  */
 public class AppInfo implements Parcelable {
-    @SerializedName("apkName")
-    private String apkName;
-    @SerializedName("apkFileName")
-    private String apkFileName;
-    @SerializedName("apkPackageName")
-    private String apkPackageName;
-    @SerializedName("apkIconUrl")
-    private String apkIconUrl;
-    @SerializedName("apkDownloadUrl")
-    private String apkDownloadUrl;
-    @SerializedName("apkVersion")
-    private String apkVersion;
-    @SerializedName("apkSize")
-    private String apkSize;
-    @SerializedName("apkType")
-    private String apkType;
-    @SerializedName("apkLanguage")
-    private String apkLanguage;
-    @SerializedName("apkSummary")
-    private String apkSummary;
-    @SerializedName("isRecommend")
-    private String isRecommend;
-    @SerializedName("isDisplay")
-    private String isDisplay;
-    @SerializedName("apkVersionCode")
-    private int apkVersionCode;
-    @SerializedName("sequence")
+
+    private int id;
     private int sequence;
+    private String name;
+    private String packageName;
+    private String url;
+    private String icon;
+    private String size;
+    private String version;
+    private int code;
+    private String type;
+    private String language;
+    private String recommend;
+    private String display;
+    private String summary;
 
-    public String getApkName() {
-        return apkName;
+    public int getId() {
+        return id;
     }
 
-    public void setApkName(String apkName) {
-        this.apkName = apkName;
-    }
-
-    public String getApkFileName() {
-        return apkFileName;
-    }
-
-    public void setApkFileName(String apkFileName) {
-        this.apkFileName = apkFileName;
-    }
-
-    public String getApkPackageName() {
-        return apkPackageName;
-    }
-
-    public void setApkPackageName(String apkPackageName) {
-        this.apkPackageName = apkPackageName;
-    }
-
-    public String getApkIconUrl() {
-        return apkIconUrl;
-    }
-
-    public void setApkIconUrl(String apkIconUrl) {
-        this.apkIconUrl = apkIconUrl;
-    }
-
-    public String getApkDownloadUrl() {
-        return apkDownloadUrl;
-    }
-
-    public void setApkDownloadUrl(String apkDownloadUrl) {
-        this.apkDownloadUrl = apkDownloadUrl;
-    }
-
-    public String getApkVersion() {
-        return apkVersion;
-    }
-
-    public void setApkVersion(String apkVersion) {
-        this.apkVersion = apkVersion;
-    }
-
-    public String getApkSize() {
-        return apkSize;
-    }
-
-    public void setApkSize(String apkSize) {
-        this.apkSize = apkSize;
-    }
-
-    public String getApkType() {
-        return apkType;
-    }
-
-    public void setApkType(String apkType) {
-        this.apkType = apkType;
-    }
-
-    public String getApkLanguage() {
-        return apkLanguage;
-    }
-
-    public void setApkLanguage(String apkLanguage) {
-        this.apkLanguage = apkLanguage;
-    }
-
-    public String getApkSummary() {
-        return apkSummary;
-    }
-
-    public void setApkSummary(String apkSummary) {
-        this.apkSummary = apkSummary;
-    }
-
-    public String getIsRecommend() {
-        return isRecommend;
-    }
-
-    public void setIsRecommend(String isRecommend) {
-        this.isRecommend = isRecommend;
-    }
-
-    public String getIsDisplay() {
-        return isDisplay;
-    }
-
-    public void setIsDisplay(String isDisplay) {
-        this.isDisplay = isDisplay;
-    }
-
-    public int getApkVersionCode() {
-        return apkVersionCode;
-    }
-
-    public void setApkVersionCode(int apkVersionCode) {
-        this.apkVersionCode = apkVersionCode;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getSequence() {
@@ -150,23 +41,119 @@ public class AppInfo implements Parcelable {
         this.sequence = sequence;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
     @Override
     public String toString() {
         return "AppInfo{" +
-                "apkName='" + apkName + '\'' +
-                ", apkFileName='" + apkFileName + '\'' +
-                ", apkPackageName='" + apkPackageName + '\'' +
-                ", apkIconUrl='" + apkIconUrl + '\'' +
-                ", apkDownloadUrl='" + apkDownloadUrl + '\'' +
-                ", apkVersion='" + apkVersion + '\'' +
-                ", apkSize='" + apkSize + '\'' +
-                ", apkType='" + apkType + '\'' +
-                ", apkLanguage='" + apkLanguage + '\'' +
-                ", apkSummary='" + apkSummary + '\'' +
-                ", isRecommend='" + isRecommend + '\'' +
-                ", isDisplay='" + isDisplay + '\'' +
-                ", apkVersionCode=" + apkVersionCode +
+                "id=" + id +
                 ", sequence=" + sequence +
+                ", name='" + name + '\'' +
+                ", packageName='" + packageName + '\'' +
+                ", url='" + url + '\'' +
+                ", icon='" + icon + '\'' +
+                ", size='" + size + '\'' +
+                ", version='" + version + '\'' +
+                ", code=" + code +
+                ", type='" + type + '\'' +
+                ", language='" + language + '\'' +
+                ", recommend='" + recommend + '\'' +
+                ", display='" + display + '\'' +
+                ", summary='" + summary + '\'' +
                 '}';
     }
 
@@ -177,40 +164,40 @@ public class AppInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.apkName);
-        dest.writeString(this.apkFileName);
-        dest.writeString(this.apkPackageName);
-        dest.writeString(this.apkIconUrl);
-        dest.writeString(this.apkDownloadUrl);
-        dest.writeString(this.apkVersion);
-        dest.writeString(this.apkSize);
-        dest.writeString(this.apkType);
-        dest.writeString(this.apkLanguage);
-        dest.writeString(this.apkSummary);
-        dest.writeString(this.isRecommend);
-        dest.writeString(this.isDisplay);
-        dest.writeInt(this.apkVersionCode);
+        dest.writeInt(this.id);
         dest.writeInt(this.sequence);
+        dest.writeString(this.name);
+        dest.writeString(this.packageName);
+        dest.writeString(this.url);
+        dest.writeString(this.icon);
+        dest.writeString(this.size);
+        dest.writeString(this.version);
+        dest.writeInt(this.code);
+        dest.writeString(this.type);
+        dest.writeString(this.language);
+        dest.writeString(this.recommend);
+        dest.writeString(this.display);
+        dest.writeString(this.summary);
     }
 
     public AppInfo() {
     }
 
     protected AppInfo(Parcel in) {
-        this.apkName = in.readString();
-        this.apkFileName = in.readString();
-        this.apkPackageName = in.readString();
-        this.apkIconUrl = in.readString();
-        this.apkDownloadUrl = in.readString();
-        this.apkVersion = in.readString();
-        this.apkSize = in.readString();
-        this.apkType = in.readString();
-        this.apkLanguage = in.readString();
-        this.apkSummary = in.readString();
-        this.isRecommend = in.readString();
-        this.isDisplay = in.readString();
-        this.apkVersionCode = in.readInt();
+        this.id = in.readInt();
         this.sequence = in.readInt();
+        this.name = in.readString();
+        this.packageName = in.readString();
+        this.url = in.readString();
+        this.icon = in.readString();
+        this.size = in.readString();
+        this.version = in.readString();
+        this.code = in.readInt();
+        this.type = in.readString();
+        this.language = in.readString();
+        this.recommend = in.readString();
+        this.display = in.readString();
+        this.summary = in.readString();
     }
 
     public static final Parcelable.Creator<AppInfo> CREATOR = new Parcelable.Creator<AppInfo>() {

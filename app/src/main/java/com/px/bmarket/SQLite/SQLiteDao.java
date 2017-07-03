@@ -34,7 +34,7 @@ public class SQLiteDao {
     }
 
     public boolean isExists(String packageName){
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.TABLE_NAME ,null , "apkPackageName=?" ,new String [] {packageName} ,null, null ,null);
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.TABLE_NAME ,null , "packageName=?" ,new String [] {packageName} ,null, null ,null);
         boolean isExists = cursor.moveToNext();
         if(cursor != null){
             cursor.close();
@@ -44,20 +44,19 @@ public class SQLiteDao {
 
     public void insertData(AppInfo appInfo){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("apkName",appInfo.getApkName());
-        contentValues.put("apkFileName",appInfo.getApkFileName());
-        contentValues.put("apkPackageName",appInfo.getApkPackageName());
-        contentValues.put("apkIconUrl",appInfo.getApkIconUrl());
-        contentValues.put("apkDownloadUrl",appInfo.getApkDownloadUrl());
-        contentValues.put("apkVersion",appInfo.getApkVersion());
-        contentValues.put("apkSize",appInfo.getApkSize());
-        contentValues.put("apkType",appInfo.getApkType());
-        contentValues.put("apkLanguage",appInfo.getApkLanguage());
-        contentValues.put("apkSummary",appInfo.getApkSummary());
-        contentValues.put("isRecommend",appInfo.getIsRecommend());
-        contentValues.put("isDisplay",appInfo.getIsDisplay());
-        contentValues.put("apkVersionCode",appInfo.getApkVersionCode());
         contentValues.put("sequence",appInfo.getSequence());
+        contentValues.put("name",appInfo.getName());
+        contentValues.put("packageName",appInfo.getPackageName());
+        contentValues.put("url",appInfo.getUrl());
+        contentValues.put("icon",appInfo.getIcon());
+        contentValues.put("size",appInfo.getSize());
+        contentValues.put("version",appInfo.getVersion());
+        contentValues.put("code",appInfo.getCode());
+        contentValues.put("type",appInfo.getType());
+        contentValues.put("language",appInfo.getLanguage());
+        contentValues.put("recommend",appInfo.getRecommend());
+        contentValues.put("display",appInfo.getDisplay());
+        contentValues.put("summary",appInfo.getSummary());
         sqLiteDatabase.insert(SQLiteHelper.TABLE_NAME ,null ,contentValues);
         if(contentValues!=null){
             contentValues.clear();
@@ -67,21 +66,20 @@ public class SQLiteDao {
 
     public void updateData(AppInfo appInfo){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("apkName",appInfo.getApkName());
-        contentValues.put("apkFileName",appInfo.getApkFileName());
-        contentValues.put("apkPackageName",appInfo.getApkPackageName());
-        contentValues.put("apkIconUrl",appInfo.getApkIconUrl());
-        contentValues.put("apkDownloadUrl",appInfo.getApkDownloadUrl());
-        contentValues.put("apkVersion",appInfo.getApkVersion());
-        contentValues.put("apkSize",appInfo.getApkSize());
-        contentValues.put("apkType",appInfo.getApkType());
-        contentValues.put("apkLanguage",appInfo.getApkLanguage());
-        contentValues.put("apkSummary",appInfo.getApkSummary());
-        contentValues.put("isRecommend",appInfo.getIsRecommend());
-        contentValues.put("isDisplay",appInfo.getIsDisplay());
-        contentValues.put("apkVersionCode",appInfo.getApkVersionCode());
         contentValues.put("sequence",appInfo.getSequence());
-        sqLiteDatabase.update(SQLiteHelper.TABLE_NAME ,contentValues ,"apkPackageName=?" ,new String []{appInfo.getApkPackageName()});
+        contentValues.put("name",appInfo.getName());
+        contentValues.put("packageName",appInfo.getPackageName());
+        contentValues.put("url",appInfo.getUrl());
+        contentValues.put("icon",appInfo.getIcon());
+        contentValues.put("size",appInfo.getSize());
+        contentValues.put("version",appInfo.getVersion());
+        contentValues.put("code",appInfo.getCode());
+        contentValues.put("type",appInfo.getType());
+        contentValues.put("language",appInfo.getLanguage());
+        contentValues.put("recommend",appInfo.getRecommend());
+        contentValues.put("display",appInfo.getDisplay());
+        contentValues.put("summary",appInfo.getSummary());
+        sqLiteDatabase.update(SQLiteHelper.TABLE_NAME ,contentValues ,"packageName=?" ,new String []{appInfo.getPackageName()});
         if(contentValues!=null){
             contentValues.clear();
             contentValues=null;
@@ -89,7 +87,7 @@ public class SQLiteDao {
     }
 
     public void insertOrUpdateData(AppInfo appInfo){
-        if(isExists(appInfo.getApkPackageName())){
+        if(isExists(appInfo.getPackageName())){
             updateData(appInfo);
         }else{
             insertData(appInfo);
@@ -102,23 +100,23 @@ public class SQLiteDao {
 
     public List<AppInfo> queryAll(){
         List<AppInfo> list = new ArrayList<>();
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.TABLE_NAME ,null ,"_id>? and isDisplay=?" ,new String[]{"0","true"} ,null ,null ,"sequence");
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.TABLE_NAME ,null ,"_id>? and display=?" ,new String[]{"0","true"} ,null ,null ,"name");
         while(cursor.moveToNext()){
             AppInfo appInfo = new AppInfo();
-            appInfo.setApkName(cursor.getString(cursor.getColumnIndex("apkName")));
-            appInfo.setApkFileName(cursor.getString(cursor.getColumnIndex("apkFileName")));
-            appInfo.setApkPackageName(cursor.getString(cursor.getColumnIndex("apkPackageName")));
-            appInfo.setApkIconUrl(cursor.getString(cursor.getColumnIndex("apkIconUrl")));
-            appInfo.setApkDownloadUrl(cursor.getString(cursor.getColumnIndex("apkDownloadUrl")));
-            appInfo.setApkVersion(cursor.getString(cursor.getColumnIndex("apkVersion")));
-            appInfo.setApkSize(cursor.getString(cursor.getColumnIndex("apkSize")));
-            appInfo.setApkType(cursor.getString(cursor.getColumnIndex("apkType")));
-            appInfo.setApkLanguage(cursor.getString(cursor.getColumnIndex("apkLanguage")));
-            appInfo.setApkSummary(cursor.getString(cursor.getColumnIndex("apkSummary")));
-            appInfo.setIsRecommend(cursor.getString(cursor.getColumnIndex("isRecommend")));
-            appInfo.setIsDisplay(cursor.getString(cursor.getColumnIndex("isDisplay")));
-            appInfo.setApkVersionCode(cursor.getInt(cursor.getColumnIndex("apkVersionCode")));
+            appInfo.setId(cursor.getInt(cursor.getColumnIndex("_id")));
             appInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
+            appInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
+            appInfo.setPackageName(cursor.getString(cursor.getColumnIndex("packageName")));
+            appInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+            appInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
+            appInfo.setSize(cursor.getString(cursor.getColumnIndex("size")));
+            appInfo.setVersion(cursor.getString(cursor.getColumnIndex("version")));
+            appInfo.setCode(cursor.getInt(cursor.getColumnIndex("code")));
+            appInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
+            appInfo.setLanguage(cursor.getString(cursor.getColumnIndex("language")));
+            appInfo.setRecommend(cursor.getString(cursor.getColumnIndex("recommend")));
+            appInfo.setDisplay(cursor.getString(cursor.getColumnIndex("display")));
+            appInfo.setSummary(cursor.getString(cursor.getColumnIndex("summary")));
             list.add(appInfo);
             if(appInfo!= null){
                 appInfo =null;
@@ -132,23 +130,23 @@ public class SQLiteDao {
 
     public List<AppInfo> queryRecommend(){
         List<AppInfo> list = new ArrayList<>();
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.TABLE_NAME ,null ,"isRecommend=? and isDisplay=?" ,new String[]{"true","true"} ,null ,null ,"sequence");
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.TABLE_NAME ,null ,"recommend=? and display=?" ,new String[]{"true","true"} ,null ,null ,"name");
         while(cursor.moveToNext()){
             AppInfo appInfo = new AppInfo();
-            appInfo.setApkName(cursor.getString(cursor.getColumnIndex("apkName")));
-            appInfo.setApkFileName(cursor.getString(cursor.getColumnIndex("apkFileName")));
-            appInfo.setApkPackageName(cursor.getString(cursor.getColumnIndex("apkPackageName")));
-            appInfo.setApkIconUrl(cursor.getString(cursor.getColumnIndex("apkIconUrl")));
-            appInfo.setApkDownloadUrl(cursor.getString(cursor.getColumnIndex("apkDownloadUrl")));
-            appInfo.setApkVersion(cursor.getString(cursor.getColumnIndex("apkVersion")));
-            appInfo.setApkSize(cursor.getString(cursor.getColumnIndex("apkSize")));
-            appInfo.setApkType(cursor.getString(cursor.getColumnIndex("apkType")));
-            appInfo.setApkLanguage(cursor.getString(cursor.getColumnIndex("apkLanguage")));
-            appInfo.setApkSummary(cursor.getString(cursor.getColumnIndex("apkSummary")));
-            appInfo.setIsRecommend(cursor.getString(cursor.getColumnIndex("isRecommend")));
-            appInfo.setIsDisplay(cursor.getString(cursor.getColumnIndex("isDisplay")));
-            appInfo.setApkVersionCode(cursor.getInt(cursor.getColumnIndex("apkVersionCode")));
+            appInfo.setId(cursor.getInt(cursor.getColumnIndex("_id")));
             appInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
+            appInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
+            appInfo.setPackageName(cursor.getString(cursor.getColumnIndex("packageName")));
+            appInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+            appInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
+            appInfo.setSize(cursor.getString(cursor.getColumnIndex("size")));
+            appInfo.setVersion(cursor.getString(cursor.getColumnIndex("version")));
+            appInfo.setCode(cursor.getInt(cursor.getColumnIndex("code")));
+            appInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
+            appInfo.setLanguage(cursor.getString(cursor.getColumnIndex("language")));
+            appInfo.setRecommend(cursor.getString(cursor.getColumnIndex("recommend")));
+            appInfo.setDisplay(cursor.getString(cursor.getColumnIndex("display")));
+            appInfo.setSummary(cursor.getString(cursor.getColumnIndex("summary")));
             list.add(appInfo);
             if(appInfo!= null){
                 appInfo =null;
@@ -162,23 +160,23 @@ public class SQLiteDao {
 
     public List<AppInfo> queryByType(String type){
         List<AppInfo> list = new ArrayList<>();
-        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.TABLE_NAME ,null ,"apkType=? and isDisplay=?" ,new String[]{type,"true"} ,null ,null ,"sequence");
+        Cursor cursor = sqLiteDatabase.query(SQLiteHelper.TABLE_NAME ,null ,"type=? and display=?" ,new String[]{type,"true"} ,null ,null ,"name");
         while(cursor.moveToNext()){
             AppInfo appInfo = new AppInfo();
-            appInfo.setApkName(cursor.getString(cursor.getColumnIndex("apkName")));
-            appInfo.setApkFileName(cursor.getString(cursor.getColumnIndex("apkFileName")));
-            appInfo.setApkPackageName(cursor.getString(cursor.getColumnIndex("apkPackageName")));
-            appInfo.setApkIconUrl(cursor.getString(cursor.getColumnIndex("apkIconUrl")));
-            appInfo.setApkDownloadUrl(cursor.getString(cursor.getColumnIndex("apkDownloadUrl")));
-            appInfo.setApkVersion(cursor.getString(cursor.getColumnIndex("apkVersion")));
-            appInfo.setApkSize(cursor.getString(cursor.getColumnIndex("apkSize")));
-            appInfo.setApkType(cursor.getString(cursor.getColumnIndex("apkType")));
-            appInfo.setApkLanguage(cursor.getString(cursor.getColumnIndex("apkLanguage")));
-            appInfo.setApkSummary(cursor.getString(cursor.getColumnIndex("apkSummary")));
-            appInfo.setIsRecommend(cursor.getString(cursor.getColumnIndex("isRecommend")));
-            appInfo.setIsDisplay(cursor.getString(cursor.getColumnIndex("isDisplay")));
-            appInfo.setApkVersionCode(cursor.getInt(cursor.getColumnIndex("apkVersionCode")));
+            appInfo.setId(cursor.getInt(cursor.getColumnIndex("_id")));
             appInfo.setSequence(cursor.getInt(cursor.getColumnIndex("sequence")));
+            appInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
+            appInfo.setPackageName(cursor.getString(cursor.getColumnIndex("packageName")));
+            appInfo.setUrl(cursor.getString(cursor.getColumnIndex("url")));
+            appInfo.setIcon(cursor.getString(cursor.getColumnIndex("icon")));
+            appInfo.setSize(cursor.getString(cursor.getColumnIndex("size")));
+            appInfo.setVersion(cursor.getString(cursor.getColumnIndex("version")));
+            appInfo.setCode(cursor.getInt(cursor.getColumnIndex("code")));
+            appInfo.setType(cursor.getString(cursor.getColumnIndex("type")));
+            appInfo.setLanguage(cursor.getString(cursor.getColumnIndex("language")));
+            appInfo.setRecommend(cursor.getString(cursor.getColumnIndex("recommend")));
+            appInfo.setDisplay(cursor.getString(cursor.getColumnIndex("display")));
+            appInfo.setSummary(cursor.getString(cursor.getColumnIndex("summary")));
             list.add(appInfo);
             if(appInfo!= null){
                 appInfo =null;

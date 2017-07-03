@@ -18,13 +18,13 @@ public final class F {
     }
 
     public static final class url{
-        public static final String video_info = "http://appota.gobeyondtv.co:8082/json/VideoInfo.json";
-        public static final String app_info = "http://appota.gobeyondtv.co:8082/json/AppInfo.json";
-        public static final String base_url = "http://appota.gobeyondtv.co:8082/";
-        public static final String app_market = "http://appota.gobeyondtv.co:8080/MarketAd/GetUpdate";
-        public static final String roll_view_info = "http://appota.gobeyondtv.co:8080/MarketAd/GetImage";
-        public static final String marquee_info = "http://appota.gobeyondtv.co:8080/MarketAd/GetMarquee";
-        public static final String button_info = "http://appota.gobeyondtv.co:8082/json/ButtonInfo.json";
+        public static final String base_url = "http://www.ldlegacy.com:8080/market/";
+        public static final String video_info = base_url+"video/";
+        public static final String app_info = base_url+"app/";
+        public static final String button_info = base_url+"button/";
+        public static final String app_market = base_url+"upgrade/";
+        public static final String roll_view_info = base_url+"rollimage/";
+        public static final String marquee_info = base_url+"marquee/";
     }
 
     public static final class sp{

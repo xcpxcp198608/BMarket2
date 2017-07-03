@@ -110,22 +110,22 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
                         showRecommendApp();
                         break;
                     case 1:
-                        showAppByType("movie");
+                        showAppByType(getString(R.string.text_video));
                         break;
                     case 2:
-                        showAppByType("ktv");
+                        showAppByType(getString(R.string.text_ktv));
                         break;
                     case 3:
-                        showAppByType("game");
+                        showAppByType(getString(R.string.text_game));
                         break;
                     case 4:
-                        showAppByType("chat");
+                        showAppByType(getString(R.string.text_im));
                         break;
                     case 5:
-                        showAppByType("music");
+                        showAppByType(getString(R.string.text_music));
                         break;
                     case 6:
-                        showAppByType("tool");
+                        showAppByType(getString(R.string.text_tools));
                         break;
                 }
             }
@@ -144,22 +144,22 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
                         showRecommendApp();
                         break;
                     case 1:
-                        showAppByType("movie");
+                        showAppByType(getString(R.string.text_video));
                         break;
                     case 2:
-                        showAppByType("ktv");
+                        showAppByType(getString(R.string.text_ktv));
                         break;
                     case 3:
-                        showAppByType("game");
+                        showAppByType(getString(R.string.text_game));
                         break;
                     case 4:
-                        showAppByType("chat");
+                        showAppByType(getString(R.string.text_im));
                         break;
                     case 5:
-                        showAppByType("music");
+                        showAppByType(getString(R.string.text_music));
                         break;
                     case 6:
-                        showAppByType("tool");
+                        showAppByType(getString(R.string.text_tools));
                         break;
                 }
             }
@@ -332,6 +332,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     }
     //根据选择的类型显示APP
     private void showAppByType(final String type) {
+        Logger.d(type);
         Observable.just(type).subscribeOn(Schedulers.io())
                 .map(new Func1<String, List<AppInfo>>() {
                     @Override
@@ -343,6 +344,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
                 .subscribe(new Action1<List<AppInfo>>() {
                     @Override
                     public void call(final List<AppInfo> appInfoList) {
+                        Logger.d(appInfoList.toString());
                         appsAdapter.refresh(appInfoList);
                         gv_Apps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override

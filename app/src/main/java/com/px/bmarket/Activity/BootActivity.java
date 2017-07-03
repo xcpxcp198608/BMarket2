@@ -6,19 +6,16 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.px.bmarket.Application;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.px.bmarket.Beans.AppInfo;
-import com.px.bmarket.Beans.AppMarketInfo;
-import com.px.bmarket.Data.IAppService;
+import com.px.bmarket.Beans.UpgradeInfo;
 import com.px.bmarket.F;
 import com.px.bmarket.FileDownload.DownloadFileInfo;
 import com.px.bmarket.FileDownload.DownloadManager;
@@ -29,24 +26,16 @@ import com.px.bmarket.SQLite.SQLiteDao;
 import com.px.bmarket.Utils.ApkCheck;
 import com.px.bmarket.Utils.ApkInstall;
 import com.px.bmarket.Utils.Logger;
+import com.px.bmarket.Utils.OkHttp.Listener.StringListener;
+import com.px.bmarket.Utils.OkHttp.OkMaster;
 import com.px.bmarket.Utils.SystemConfig;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -64,7 +53,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     @BindView(R.id.tv_progress)
     TextView tv_Progress;
 
-    private AppMarketInfo mAppMarketInfo;
+    private UpgradeInfo mUpgradeInfo;
     private DownloadManager downloadManager;
     private SQLiteDao sqliteDao;
 
@@ -81,7 +70,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     protected void onStart() {
         super.onStart();
         checkDevice();
-        presenter.dispatch();
+        presenter.checkUpdate();
     }
 
     @Override
@@ -136,75 +125,29 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     }
 
     @Override
-    public void checkUpdate(AppMarketInfo appMarketInfo) {
+    public void checkUpdate(UpgradeInfo upgradeInfo) {
         int localVerCode = ApkCheck.getInstalledApkVersionCode(BootActivity.this, getPackageName());
-        if (localVerCode >= appMarketInfo.getApkVersionCode()) {
+        if (localVerCode >= upgradeInfo.getCode()) {
             loadApp1();
         } else {
             ll_Update.setVisibility(View.VISIBLE);
-            tv_UpdateMessage.setText(appMarketInfo.getApkUpdateInfo());
+            tv_UpdateMessage.setText(upgradeInfo.getInfo());
             bt_UpdateConfirm.requestFocus();
-            mAppMarketInfo = appMarketInfo;
+            mUpgradeInfo = upgradeInfo;
         }
     }
 
-    public void loadApp(){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(F.url.app_info, new com.android.volley.Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray jsonArray) {
-                if(jsonArray.length()>0){
-                    try {
-                    for (int i = 0; i <jsonArray.length() ; i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        AppInfo appInfo = new AppInfo();
-                        appInfo.setApkName(jsonObject.getString("apkName"));
-                        appInfo.setApkFileName(jsonObject.getString("apkFileName"));
-                        appInfo.setApkPackageName(jsonObject.getString("apkPackageName"));
-                        appInfo.setApkIconUrl(jsonObject.getString("apkIconUrl"));
-                        appInfo.setApkDownloadUrl(jsonObject.getString("apkDownloadUrl"));
-                        appInfo.setApkVersion(jsonObject.getString("apkVersion"));
-                        appInfo.setApkSize(jsonObject.getString("apkSize"));
-                        appInfo.setApkType(jsonObject.getString("apkType"));
-                        appInfo.setApkLanguage(jsonObject.getString("apkLanguage"));
-                        appInfo.setApkSummary(jsonObject.getString("apkSummary"));
-                        appInfo.setIsRecommend(jsonObject.getString("isRecommend"));
-                        appInfo.setIsDisplay(jsonObject.getString("isDisplay"));
-                        appInfo.setApkVersionCode(jsonObject.getInt("apkVersionCode"));
-                        appInfo.setSequence(jsonObject.getInt("sequence"));
-                        Logger.d(appInfo.toString());
-                        sqliteDao.insertOrUpdateData(appInfo);
-                    }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    startActivity(new Intent(BootActivity.this ,MainActivity.class));
-                    finish();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Logger.d(volleyError.getMessage());
-            }
-        });
-        jsonArrayRequest.setTag("AppInfo");
-        Application.getVolleyRequest().add(jsonArrayRequest);
-    }
-
     public void loadApp1(){
-        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-        okHttpClient.connectTimeout(30, TimeUnit.SECONDS);
-        new  Retrofit.Builder().baseUrl(F.url.base_url)
-                .client(okHttpClient.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(IAppService.class)
-                .getData()
-                .enqueue(new Callback<List<AppInfo>>() {
+        OkMaster.post(F.url.app_info)
+                .enqueue(new StringListener() {
                     @Override
-                    public void onResponse(Call<List<AppInfo>> call, Response<List<AppInfo>> response) {
-                        if(response.body().size()>0){
-                            Observable.from(response.body())
+                    public void onSuccess(String s) throws IOException {
+                        if(s == null){
+                            return;
+                        }
+                        List<AppInfo> appInfos = new Gson().fromJson(s, new TypeToken<List<AppInfo>>(){}.getType()) ;
+                        if(appInfos != null){
+                            Observable.from(appInfos)
                                     .subscribe(new Action1<AppInfo>() {
                                         @Override
                                         public void call(AppInfo appInfo) {
@@ -212,13 +155,13 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
                                             sqliteDao.insertOrUpdateData(appInfo);
                                         }
                                     });
-                            startActivity(new Intent(BootActivity.this ,MainActivity.class));
-                            finish();
                         }
+                        startActivity(new Intent(BootActivity.this ,MainActivity.class));
+                        finish();
                     }
 
                     @Override
-                    public void onFailure(Call<List<AppInfo>> call, Throwable t) {
+                    public void onFailure(String e) {
                         startActivity(new Intent(BootActivity.this ,MainActivity.class));
                         finish();
                     }
@@ -227,22 +170,22 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
 
     @OnClick(R.id.bt_UpdateConfirm)
     public void onClick() {
-        if (mAppMarketInfo != null) {
+        if (mUpgradeInfo != null) {
             ll_Update.setVisibility(View.GONE);
             pb_UpdateProgress.setVisibility(View.VISIBLE);
             tv_Progress.setVisibility(View.VISIBLE);
-            updateAppMarket(mAppMarketInfo);
+            updateAppMarket(mUpgradeInfo);
         }
     }
 
-    private void updateAppMarket(final AppMarketInfo appMarketInfo) {
-        Logger.d(appMarketInfo.toString());
+    private void updateAppMarket(final UpgradeInfo upgradeInfo) {
+        Logger.d(upgradeInfo.toString());
         if(downloadManager == null){
             downloadManager = new DownloadManager(BootActivity.this);
         }
         DownloadFileInfo downloadFileInfo = new DownloadFileInfo();
-        downloadFileInfo.setFileFullName(appMarketInfo.getApkFileName());
-        downloadFileInfo.setFileDownloadUrl(appMarketInfo.getApkFileDownloadUrl());
+        downloadFileInfo.setFileFullName(upgradeInfo.getName());
+        downloadFileInfo.setFileDownloadUrl(upgradeInfo.getUrl());
         downloadManager.startDownload(downloadFileInfo ,F.path.market);
         downloadManager.setDownloadStatusListener(new DownloadStatusListener() {
             @Override
@@ -267,8 +210,8 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
                 tv_Progress.setText(100+"%");
                 pb_UpdateProgress.setVisibility(View.GONE);
                 tv_Progress.setVisibility(View.GONE);
-                if(ApkCheck.isApkCanInstalled(BootActivity.this,F.path.market ,appMarketInfo.getApkFileName())) {
-                    ApkInstall.installApk(BootActivity.this, F.path.market, appMarketInfo.getApkFileName());
+                if(ApkCheck.isApkCanInstalled(BootActivity.this,F.path.market , upgradeInfo.getName())) {
+                    ApkInstall.installApk(BootActivity.this, F.path.market, upgradeInfo.getName());
                 }else{
                     SystemConfig.toastLong(BootActivity.this,getString(R.string.download_error));
                 }
