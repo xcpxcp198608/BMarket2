@@ -151,7 +151,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
                                     .subscribe(new Action1<AppInfo>() {
                                         @Override
                                         public void call(AppInfo appInfo) {
-//                                            Logger.d(appInfo.toString());
+                                            Logger.d(appInfo.toString());
                                             sqliteDao.insertOrUpdateData(appInfo);
                                         }
                                     });

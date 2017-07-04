@@ -14,7 +14,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             ", sequence integer, name text, packageName text,url text,icon text,size text, version text,code integer" +
             ",type text,language text,recommend text,display text, summary text)";
     private static final String DROP_TABLE = "drop table if exists "+TABLE_NAME;
-    private static final int VERSION = 4;
+    private static final int VERSION = 5;
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
