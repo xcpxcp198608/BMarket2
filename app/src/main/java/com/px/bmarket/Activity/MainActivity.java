@@ -291,6 +291,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
 
     @Override
     public void loadVideo(VideoInfo videoInfo) {
+        Logger.d(videoInfo.toString());
         playVideo(videoInfo.getMd5());
     }
     //显示推荐的APP
@@ -372,11 +373,8 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
 
     private boolean isVideoCanPlay(String videoMD5){
         String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
-        if(localMD5.equalsIgnoreCase(videoMD5)){
-            return true;
-        }else{
-            return false;
-        }
+        Logger.d(videoMD5);
+        return localMD5.equalsIgnoreCase(videoMD5);
     }
     //播放影片
     private void playVideo(final String videoMD5) {
