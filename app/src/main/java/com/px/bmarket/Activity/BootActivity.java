@@ -69,7 +69,11 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     @Override
     protected void onStart() {
         super.onStart();
-        checkDevice();
+        if(!"BTVi3".equals(Build.MODEL) && !"MorphoBT E110".equals(Build.MODEL) && !"BTV3".equals(Build.MODEL)) {
+            showWarningDialog(BootActivity.this, getString(R.string.warning_title), getString(R.string.warning_message1)
+                    , getString(R.string.warning_exit));
+            return;
+        }
         presenter.checkUpdate();
     }
 
@@ -99,16 +103,6 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     protected BootActivityPresenter createPresenter() {
         return new BootActivityPresenter(this);
     }
-
-    private void checkDevice() {
-        if (!"BTVi3".equals(Build.MODEL) && !"MorphoBT E110".equals(Build.MODEL) && !"HM NOTE 1LTE".equals(Build.MODEL)
-                && !"BTV3".equals(Build.MODEL)) {
-            showWarningDialog(BootActivity.this, getString(R.string.warning_title), getString(R.string.warning_message1)
-                    , getString(R.string.warning_exit));
-            return;
-        }
-    }
-
 
     private void showWarningDialog(Context context, String title, String message, String negativeButtonText) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
