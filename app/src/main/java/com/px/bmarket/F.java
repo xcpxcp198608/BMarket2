@@ -18,7 +18,7 @@ public final class F {
     }
 
     public static final class url{
-        public static final String base_url = "http://www.ldlegacy.com:8080/market/";
+        public static final String base_url = "http://market.v2.ldlegacy.com:8085/market/";
         public static final String video_info = base_url+"video/";
         public static final String app_info = base_url+"app/";
         public static final String button_info = base_url+"button/";

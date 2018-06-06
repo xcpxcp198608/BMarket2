@@ -69,7 +69,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
     @Override
     protected void onStart() {
         super.onStart();
-        if(!"BTVi3".equals(Build.MODEL) && !"MorphoBT E110".equals(Build.MODEL) && !"BTV3".equals(Build.MODEL)) {
+        if(!Build.MODEL.startsWith("BTV")) {
             showWarningDialog(BootActivity.this, getString(R.string.warning_title), getString(R.string.warning_message1)
                     , getString(R.string.warning_exit));
             return;
