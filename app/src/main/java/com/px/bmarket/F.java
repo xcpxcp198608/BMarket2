@@ -11,12 +11,6 @@ public final class F {
         public static final String tag = "----px----";
     }
 
-    public static final class path{
-        public static final String video = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BMarket/";
-        public static final String market = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BMarket/";
-        public static final String apps = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BMarket/";
-    }
-
     public static final class url{
         public static final String base_url = "http://market.v2.ldlegacy.com:8085/market/";
         public static final String video_info = base_url+"video/";

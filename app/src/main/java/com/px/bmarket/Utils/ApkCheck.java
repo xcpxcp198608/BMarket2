@@ -154,7 +154,7 @@ public class ApkCheck {
     public static boolean isApkCanInstalled (Context context , String apkFilePath ,String apkFileFullName){
         PackageInfo packageInfo = null;
         PackageManager packageManager = context.getPackageManager();
-        packageInfo = packageManager.getPackageArchiveInfo(apkFilePath+apkFileFullName ,PackageManager.GET_ACTIVITIES);
+        packageInfo = packageManager.getPackageArchiveInfo(apkFilePath + "/" + apkFileFullName ,PackageManager.GET_ACTIVITIES);
         if(packageInfo != null){
             return true;
         }else{

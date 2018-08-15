@@ -79,7 +79,7 @@ public class DownloadTask implements Runnable {
         if(sqLiteDao.isExists(downloadFileInfo)) {
             downloadFileInfo = sqLiteDao.queryDataByFileFullName(downloadFileInfo.getFileFullName()).get(0);
         }
-        Log.d("----px----",downloadFileInfo.getFileDownloadUrl());
+        Log.d("----px----", downloadFileInfo.getFileDownloadUrl());
         isPause = false;
         HttpURLConnection httpURLConnection = null;
         HttpURLConnection httpURLConnection1 = null;
@@ -109,7 +109,7 @@ public class DownloadTask implements Runnable {
             if(! dir.exists()) {
                 dir.mkdir();
             }
-            File file = new File(dir ,downloadFileInfo.getFileFullName());
+            File file = new File(dir, downloadFileInfo.getFileFullName());
             randomAccessFile = new RandomAccessFile(file ,"rwd");
             randomAccessFile.setLength(downloadFileInfo.getFileLength());
             randomAccessFile.seek(startPosition);
@@ -118,7 +118,7 @@ public class DownloadTask implements Runnable {
             httpURLConnection1 = (HttpURLConnection) url1.openConnection();
             httpURLConnection1.setRequestMethod("GET");
             httpURLConnection1.setConnectTimeout(5000);
-            httpURLConnection1.setRequestProperty("Range" , "bytes="+startPosition+"-"+downloadFileInfo.getEnd());
+            httpURLConnection1.setRequestProperty("Range" , "bytes=" + startPosition + "-" + downloadFileInfo.getEnd());
             if(httpURLConnection1.getResponseCode() == HttpURLConnection.HTTP_PARTIAL){
                 inputStream = httpURLConnection1.getInputStream();
                 byte [] buffer = new byte[1024];

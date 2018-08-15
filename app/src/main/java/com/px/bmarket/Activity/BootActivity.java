@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.px.bmarket.Application;
 import com.px.bmarket.Beans.AppInfo;
 import com.px.bmarket.Beans.UpgradeInfo;
 import com.px.bmarket.F;
@@ -180,7 +181,7 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
         DownloadFileInfo downloadFileInfo = new DownloadFileInfo();
         downloadFileInfo.setFileFullName(upgradeInfo.getName());
         downloadFileInfo.setFileDownloadUrl(upgradeInfo.getUrl());
-        downloadManager.startDownload(downloadFileInfo ,F.path.market);
+        downloadManager.startDownload(downloadFileInfo, Application.DOWNLOAD_PATH);
         downloadManager.setDownloadStatusListener(new DownloadStatusListener() {
             @Override
             public void startDownload(boolean isStart, long fileLength) {
@@ -204,8 +205,8 @@ public class BootActivity extends BaseActivity<IBootActivity, BootActivityPresen
                 tv_Progress.setText(100+"%");
                 pb_UpdateProgress.setVisibility(View.GONE);
                 tv_Progress.setVisibility(View.GONE);
-                if(ApkCheck.isApkCanInstalled(BootActivity.this,F.path.market , upgradeInfo.getName())) {
-                    ApkInstall.installApk(BootActivity.this, F.path.market, upgradeInfo.getName());
+                if(ApkCheck.isApkCanInstalled(BootActivity.this,Application.DOWNLOAD_PATH, upgradeInfo.getName())) {
+                    ApkInstall.installApk(BootActivity.this, Application.DOWNLOAD_PATH, upgradeInfo.getName(), "com.px.bmarket.fileprovider");
                 }else{
                     SystemConfig.toastLong(BootActivity.this,getString(R.string.download_error));
                 }

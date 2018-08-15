@@ -50,16 +50,16 @@ import butterknife.OnClick;
  * Created by PX on 2016/9/11.
  */
 public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadActivityPresenter> implements IDownloadActivity {
-    @BindView(R.id.bt_link1_1)
-    Button bt_Link11;
-    @BindView(R.id.bt_link2_1)
-    Button bt_Link21;
-    @BindView(R.id.bt_link3_1)
-    Button bt_Link31;
-    @BindView(R.id.bt_link4_1)
-    Button bt_Link41;
-    @BindView(R.id.bt_link5_1)
-    Button bt_Link51;
+//    @BindView(R.id.bt_link1_1)
+//    Button bt_Link11;
+//    @BindView(R.id.bt_link2_1)
+//    Button bt_Link21;
+//    @BindView(R.id.bt_link3_1)
+//    Button bt_Link31;
+//    @BindView(R.id.bt_link4_1)
+//    Button bt_Link41;
+//    @BindView(R.id.bt_link5_1)
+//    Button bt_Link51;
     @BindView(R.id.iv_AppIcon)
     ImageView iv_AppIcon;
     @BindView(R.id.tv_AppName)
@@ -78,14 +78,14 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     TextView tv_Progress1;
     @BindView(R.id.pb_DownloadProgress)
     ProgressBar pb_DownloadProgress;
-    @BindView(R.id.rv_Image_1)
-    RollPagerView rv_Image1;
-    @BindView(R.id.videoView_1)
-    VideoView videoView1;
+//    @BindView(R.id.rv_Image_1)
+//    RollPagerView rv_Image1;
+//    @BindView(R.id.videoView_1)
+//    VideoView videoView1;
     @BindView(R.id.tv_AppSummary)
     TextView tv_AppSummary;
-    @BindView(R.id.tv_Marquee_1)
-    MarqueeView tv_Marquee1;
+//    @BindView(R.id.tv_Marquee_1)
+//    MarqueeView tv_Marquee1;
 
     private AppInfo appInfo;
     private List<ButtonInfo> mButtonInfos;
@@ -95,7 +95,7 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_download);
+        setContentView(R.layout.activity_download1);
         ButterKnife.bind(this);
         appInfo = getIntent().getParcelableExtra("appInfo");
         if(appInfo!= null){
@@ -128,17 +128,17 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     @Override
     protected void onPause() {
         super.onPause();
-        if(videoView1!= null) {
-            videoView1.stopPlayback();
-        }
+//        if(videoView1!= null) {
+//            videoView1.stopPlayback();
+//        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if(videoView1!= null) {
-            videoView1.stopPlayback();
-        }
+//        if(videoView1!= null) {
+//            videoView1.stopPlayback();
+//        }
         if(downloadManager!= null){
             downloadManager.pauseDownload();
         }
@@ -147,10 +147,10 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(videoView1!= null) {
-            videoView1.pause();
-            videoView1.stopPlayback();
-        }
+//        if(videoView1!= null) {
+//            videoView1.pause();
+//            videoView1.stopPlayback();
+//        }
         if(downloadManager!= null){
             downloadManager.pauseDownload();
         }
@@ -167,22 +167,22 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
             return;
         }
         RollViewAdapter rollViewAdapter = new RollViewAdapter(rollImageInfos);
-        rv_Image1.setAdapter(rollViewAdapter);
-        rv_Image1.setHintView(null);
-        rv_Image1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        rv_Image1.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                SystemConfig.openBrowserByUrl(DownloadActivity.this, rollImageInfos.get(position).getLink());
-            }
-        });
+//        rv_Image1.setAdapter(rollViewAdapter);
+//        rv_Image1.setHintView(null);
+//        rv_Image1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        rv_Image1.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
+//                SystemConfig.openBrowserByUrl(DownloadActivity.this, rollImageInfos.get(position).getLink());
+//            }
+//        });
     }
 
     @Override
@@ -190,10 +190,10 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         if(marqueeInfo == null){
             return;
         }
-        tv_Marquee1.setText("                                                                         " +
-                "                                                                                    " +
-                "                                                                                    " +
-                "                         " +marqueeInfo.getContent());
+//        tv_Marquee1.setText("                                                                         " +
+//                "                                                                                    " +
+//                "                                                                                    " +
+//                "                         " +marqueeInfo.getContent());
     }
 
     @Override
@@ -202,76 +202,76 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
             return;
         }
         mButtonInfos = buttonInfos;
-        bt_Link11.setText(buttonInfos.get(0).getText());
-        bt_Link21.setText(buttonInfos.get(1).getText());
-        bt_Link31.setText(buttonInfos.get(2).getText());
-        bt_Link41.setText(buttonInfos.get(3).getText());
-        bt_Link51.setText(buttonInfos.get(4).getText());
-        bt_Link11.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        bt_Link21.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        bt_Link31.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        bt_Link41.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        bt_Link51.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
+//        bt_Link11.setText(buttonInfos.get(0).getText());
+//        bt_Link21.setText(buttonInfos.get(1).getText());
+//        bt_Link31.setText(buttonInfos.get(2).getText());
+//        bt_Link41.setText(buttonInfos.get(3).getText());
+//        bt_Link51.setText(buttonInfos.get(4).getText());
+//        bt_Link11.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        bt_Link21.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        bt_Link31.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        bt_Link41.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        bt_Link51.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
     }
 
     @Override
     public void loadVideo(VideoInfo videoInfo) {
-        playVideo(videoInfo.getMd5());
+//        playVideo(videoInfo.getMd5());
     }
 
-    @OnClick({R.id.bt_link1_1, R.id.bt_link2_1, R.id.bt_link3_1, R.id.bt_link4_1, R.id.bt_link5_1, R.id.bt_Download})
+    @OnClick({R.id.bt_Download})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bt_link1_1:
-                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(0).getUrl());
-                break;
-            case R.id.bt_link2_1:
-                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(1).getUrl());
-                break;
-            case R.id.bt_link3_1:
-                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(2).getUrl());
-                break;
-            case R.id.bt_link4_1:
-                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(3).getUrl());
-                break;
-            case R.id.bt_link5_1:
-                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(4).getUrl());
-                break;
+//            case R.id.bt_link1_1:
+//                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(0).getUrl());
+//                break;
+//            case R.id.bt_link2_1:
+//                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(1).getUrl());
+//                break;
+//            case R.id.bt_link3_1:
+//                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(2).getUrl());
+//                break;
+//            case R.id.bt_link4_1:
+//                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(3).getUrl());
+//                break;
+//            case R.id.bt_link5_1:
+//                SystemConfig.openBrowserByUrl(DownloadActivity.this ,mButtonInfos.get(4).getUrl());
+//                break;
             case R.id.bt_Download:
                 String bt_Text = bt_Download.getText().toString().trim();
                 if(getString(R.string.text_download).equals(bt_Text)){
@@ -281,8 +281,8 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
                 }else if(getString(R.string.text_downloading).equals(bt_Text)){
 
                 }else if(getString(R.string.text_install).equals(bt_Text)){
-                    if(ApkCheck.isApkCanInstalled(DownloadActivity.this,F.path.apps,appInfo.getPackageName()+".apk")){
-                        ApkInstall.installApk(DownloadActivity.this ,F.path.apps ,appInfo.getPackageName()+".apk");
+                    if(ApkCheck.isApkCanInstalled(DownloadActivity.this, Application.DOWNLOAD_PATH,appInfo.getPackageName()+".apk")){
+                        ApkInstall.installApk(DownloadActivity.this, Application.DOWNLOAD_PATH ,appInfo.getPackageName()+".apk", "com.px.bmarket.fileprovider");
                     }
                 }else if(getString(R.string.text_launch).equals(bt_Text)){
                     ApkLaunch.launchApkByPackageName(DownloadActivity.this,appInfo.getPackageName());
@@ -293,11 +293,12 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
 
     private void downloadApp(){
         if(downloadManager == null){
+            Logger.d(appInfo.toString());
             downloadManager = new DownloadManager(DownloadActivity.this);
             DownloadFileInfo downloadFileInfo = new DownloadFileInfo();
             downloadFileInfo.setFileFullName(appInfo.getPackageName()+".apk");
             downloadFileInfo.setFileDownloadUrl(appInfo.getUrl());
-            downloadManager.startDownload(downloadFileInfo , F.path.apps);
+            downloadManager.startDownload(downloadFileInfo, Application.DOWNLOAD_PATH);
             downloadManager.setDownloadStatusListener(new DownloadStatusListener() {
                 @Override
                 public void startDownload(boolean isStart, long fileLength) {
@@ -326,8 +327,8 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
                     bt_Download.setBackgroundResource(R.drawable.button_blue);
                     tv_Progress1.setVisibility(View.GONE);
                     pb_DownloadProgress.setVisibility(View.GONE);
-                    if(ApkCheck.isApkCanInstalled(DownloadActivity.this,F.path.apps,appInfo.getPackageName()+".apk")){
-                        ApkInstall.installApk(DownloadActivity.this ,F.path.apps ,appInfo.getPackageName()+".apk");
+                    if(ApkCheck.isApkCanInstalled(DownloadActivity.this, Application.DOWNLOAD_PATH,appInfo.getPackageName()+".apk")){
+                        ApkInstall.installApk(DownloadActivity.this, Application.DOWNLOAD_PATH ,appInfo.getPackageName()+".apk", "com.px.bmarket.fileprovider");
                     }
                 }
             });
@@ -344,16 +345,16 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
             }else {
                 bt_Download.setText(getString(R.string.text_launch));
                 bt_Download.setBackgroundResource(R.drawable.button_green);
-                if(ApkCheck.isFileExists(F.path.apps,appInfo.getPackageName()+".apk")){
-                    File file = new File(F.path.apps,appInfo.getPackageName()+".apk");
+                if(ApkCheck.isFileExists(Application.DOWNLOAD_PATH,appInfo.getPackageName()+".apk")){
+                    File file = new File(Application.DOWNLOAD_PATH,appInfo.getPackageName()+".apk");
                     if(file.exists()){
                         file.delete();
                     }
                 }
             }
-        }else if(ApkCheck.isFileExists(F.path.apps ,appInfo.getPackageName()+".apk")
-                && ApkCheck.isApkCanInstalled(DownloadActivity.this ,F.path.apps ,appInfo.getPackageName()+".apk")){
-            int localCode = ApkCheck.getApkFileVersionCode(DownloadActivity.this ,F.path.apps ,appInfo.getPackageName()+".apk");
+        }else if(ApkCheck.isFileExists(Application.DOWNLOAD_PATH ,appInfo.getPackageName()+".apk")
+                && ApkCheck.isApkCanInstalled(DownloadActivity.this ,Application.DOWNLOAD_PATH ,appInfo.getPackageName()+".apk")){
+            int localCode = ApkCheck.getApkFileVersionCode(DownloadActivity.this ,Application.DOWNLOAD_PATH ,appInfo.getPackageName()+".apk");
             boolean isNeedUpdate = appInfo.getCode() > localCode;
             if(isNeedUpdate){
                 bt_Download.setText(getString(R.string.text_update));
@@ -372,7 +373,7 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
     }
 
     private boolean isVideoCanPlay(String videoMD5){
-        String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
+        String localMD5 = MD5.getFileMD5(Application.DOWNLOAD_PATH ,"btvi3.mp4");
         if(localMD5.equalsIgnoreCase(videoMD5)){
             return true;
         }else{
@@ -380,28 +381,35 @@ public class DownloadActivity extends BaseActivity<IDownloadActivity, DownloadAc
         }
     }
 
-    private void playVideo(final String videoMD5) {
-        if(isVideoCanPlay(videoMD5)){
-            videoView1.setVideoPath(F.path.video+"btvi3.mp4");
-        }else {
-            videoView1.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
-        }
-        videoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                videoView1.start();
-            }
-        });
-        videoView1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if(isVideoCanPlay(videoMD5)){
-                    videoView1.setVideoPath(F.path.video+"btvi3.mp4");
-                }else {
-                    videoView1.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
-                }
-                videoView1.start();
-            }
-        });
-    }
+//    private void playVideo(final String videoMD5) {
+//        if(isVideoCanPlay(videoMD5)){
+//            videoView1.setVideoPath(Application.DOWNLOAD_PATH+"btvi3.mp4");
+//        }else {
+//            videoView1.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
+//        }
+//        videoView1.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                videoView1.start();
+//            }
+//        });
+//        videoView1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                if(isVideoCanPlay(videoMD5)){
+//                    videoView1.setVideoPath(Application.DOWNLOAD_PATH+"btvi3.mp4");
+//                }else {
+//                    videoView1.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
+//                }
+//                videoView1.start();
+//            }
+//        });
+//
+//        videoView1.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+//            @Override
+//            public boolean onError(MediaPlayer mp, int what, int extra) {
+//                return true;
+//            }
+//        });
+//    }
 }

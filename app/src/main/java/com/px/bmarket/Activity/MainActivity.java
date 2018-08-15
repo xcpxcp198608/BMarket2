@@ -57,24 +57,24 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
 
     @BindView(R.id.lv_AppType)
     ListView lv_AppType;
-    @BindView(R.id.tv_Marquee)
-    MarqueeView tv_Marquee;
+//    @BindView(R.id.tv_Marquee)
+//    MarqueeView tv_Marquee;
     @BindView(R.id.gv_Apps)
     GridView gv_Apps;
-    @BindView(R.id.rv_Image)
-    RollPagerView rv_Image;
-    @BindView(R.id.videoView)
-    VideoView videoView;
-    @BindView(R.id.bt_link1)
-    Button bt_Link1;
-    @BindView(R.id.bt_link2)
-    Button bt_Link2;
-    @BindView(R.id.bt_link3)
-    Button bt_Link3;
-    @BindView(R.id.bt_link4)
-    Button bt_Link4;
-    @BindView(R.id.bt_link5)
-    Button bt_Link5;
+//    @BindView(R.id.rv_Image)
+//    RollPagerView rv_Image;
+//    @BindView(R.id.videoView)
+//    VideoView videoView;
+//    @BindView(R.id.bt_link1)
+//    Button bt_Link1;
+//    @BindView(R.id.bt_link2)
+//    Button bt_Link2;
+//    @BindView(R.id.bt_link3)
+//    Button bt_Link3;
+//    @BindView(R.id.bt_link4)
+//    Button bt_Link4;
+//    @BindView(R.id.bt_link5)
+//    Button bt_Link5;
 
     private AppTypeAdapter appTypeAdapter;
     private SQLiteDao sqLiteDao;
@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main1);
         ButterKnife.bind(this);
 
         sqLiteDao = SQLiteDao.getInstance(MainActivity.this);
@@ -174,26 +174,26 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     @Override
     protected void onPause() {
         super.onPause();
-        if(videoView!=null){
-            videoView.stopPlayback();
-        }
+//        if(videoView!=null){
+//            videoView.stopPlayback();
+//        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if(videoView!=null){
-            videoView.stopPlayback();
-        }
+//        if(videoView!=null){
+//            videoView.stopPlayback();
+//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(videoView!=null){
-            videoView.pause();
-            videoView.stopPlayback();
-        }
+//        if(videoView!=null){
+//            videoView.pause();
+//            videoView.stopPlayback();
+//        }
     }
 
     @Override
@@ -207,22 +207,22 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
             return;
         }
         RollViewAdapter rollViewAdapter = new RollViewAdapter(rollImageInfos);
-        rv_Image.setAdapter(rollViewAdapter);
-        rv_Image.setHintView(null);
-        rv_Image.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        rv_Image.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                SystemConfig.openBrowserByUrl(MainActivity.this, rollImageInfos.get(position).getLink());
-            }
-        });
+//        rv_Image.setAdapter(rollViewAdapter);
+//        rv_Image.setHintView(null);
+//        rv_Image.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        rv_Image.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
+//                SystemConfig.openBrowserByUrl(MainActivity.this, rollImageInfos.get(position).getLink());
+//            }
+//        });
     }
 
     @Override
@@ -230,10 +230,10 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
         if(marqueeInfo == null){
             return;
         }
-        tv_Marquee.setText("                                                                         " +
-                "                                                                                    " +
-                "                                                                                    " +
-                "                         " +marqueeInfo.getContent());
+//        tv_Marquee.setText("                                                                         " +
+//                "                                                                                    " +
+//                "                                                                                    " +
+//                "                         " +marqueeInfo.getContent());
     }
 
     @Override
@@ -242,57 +242,57 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
             return;
         }
         mButtonInfos = buttonInfos;
-        bt_Link1.setText(buttonInfos.get(0).getText());
-        bt_Link2.setText(buttonInfos.get(1).getText());
-        bt_Link3.setText(buttonInfos.get(2).getText());
-        bt_Link4.setText(buttonInfos.get(3).getText());
-        bt_Link5.setText(buttonInfos.get(4).getText());
-        bt_Link1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        bt_Link2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        bt_Link3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        bt_Link4.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
-        bt_Link5.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Animator.zoomIn09_10(v);
-                }
-            }
-        });
+//        bt_Link1.setText(buttonInfos.get(0).getText());
+//        bt_Link2.setText(buttonInfos.get(1).getText());
+//        bt_Link3.setText(buttonInfos.get(2).getText());
+//        bt_Link4.setText(buttonInfos.get(3).getText());
+//        bt_Link5.setText(buttonInfos.get(4).getText());
+//        bt_Link1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        bt_Link2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        bt_Link3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        bt_Link4.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
+//        bt_Link5.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    Animator.zoomIn09_10(v);
+//                }
+//            }
+//        });
     }
 
     @Override
     public void loadVideo(VideoInfo videoInfo) {
         Logger.d(videoInfo.toString());
-        playVideo(videoInfo.getMd5());
+//        playVideo(videoInfo.getMd5());
     }
     //显示推荐的APP
     private void showRecommendApp() {
@@ -372,56 +372,62 @@ public class MainActivity extends BaseActivity<IMainActivity, MainActivityPresen
     }
 
     private boolean isVideoCanPlay(String videoMD5){
-        String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
+        String localMD5 = MD5.getFileMD5(Application.DOWNLOAD_PATH ,"btvi3.mp4");
         Logger.d(videoMD5);
         return localMD5.equalsIgnoreCase(videoMD5);
     }
     //播放影片
-    private void playVideo(final String videoMD5) {
-        if(isVideoCanPlay(videoMD5)){
-            videoView.setVideoPath(F.path.video+"btvi3.mp4");
-        }else {
-            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
-        }
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                videoView.start();
-            }
-        });
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if(isVideoCanPlay(videoMD5)){
-                    videoView.setVideoPath(F.path.video+"btvi3.mp4");
-                }else {
-                    videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
-                }
-                videoView.start();
-            }
-        });
-    }
+//    private void playVideo(final String videoMD5) {
+//        if(isVideoCanPlay(videoMD5)){
+//            videoView.setVideoPath(Application.DOWNLOAD_PATH+"btvi3.mp4");
+//        }else {
+//            videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
+//        }
+//        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                videoView.start();
+//            }
+//        });
+//        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                if(isVideoCanPlay(videoMD5)){
+//                    videoView.setVideoPath(Application.DOWNLOAD_PATH+"btvi3.mp4");
+//                }else {
+//                    videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.btvi3));
+//                }
+//                videoView.start();
+//            }
+//        });
+//        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+//            @Override
+//            public boolean onError(MediaPlayer mp, int what, int extra) {
+//                return true;
+//            }
+//        });
+//    }
 
-    @OnClick({R.id.bt_link1, R.id.bt_link2, R.id.bt_link3, R.id.bt_link4, R.id.bt_link5})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.bt_link1:
-                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(0).getUrl());
-                break;
-            case R.id.bt_link2:
-                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(1).getUrl());
-                break;
-            case R.id.bt_link3:
-                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(2).getUrl());
-                break;
-            case R.id.bt_link4:
-                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(3).getUrl());
-                break;
-            case R.id.bt_link5:
-                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(4).getUrl());
-                break;
-        }
-    }
+//    @OnClick({R.id.bt_link1, R.id.bt_link2, R.id.bt_link3, R.id.bt_link4, R.id.bt_link5})
+//    public void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.bt_link1:
+//                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(0).getUrl());
+//                break;
+//            case R.id.bt_link2:
+//                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(1).getUrl());
+//                break;
+//            case R.id.bt_link3:
+//                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(2).getUrl());
+//                break;
+//            case R.id.bt_link4:
+//                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(3).getUrl());
+//                break;
+//            case R.id.bt_link5:
+//                SystemConfig.openBrowserByUrl(MainActivity.this ,mButtonInfos.get(4).getUrl());
+//                break;
+//        }
+//    }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

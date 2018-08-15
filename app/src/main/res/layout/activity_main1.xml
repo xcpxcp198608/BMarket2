@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp"
+    android:background="@drawable/mainbg3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:src="@drawable/logo"
+            android:layout_weight="1.2"
+            android:layout_width="0dp"
+            android:layout_height="80dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ListView
+            android:listSelector="@color/colorAlpha0"
+            android:layout_marginRight="10dp"
+            android:scrollbars="none"
+            android:divider="@color/colorAlpha0"
+            android:dividerHeight="5dp"
+            android:id="@+id/lv_AppType"
+            android:layout_weight="1.2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+            <GridView
+                android:padding="5dp"
+                android:listSelector="@color/colorAlpha0"
+                android:id="@+id/gv_Apps"
+                android:numColumns="8"
+                android:verticalSpacing="5dp"
+                android:horizontalSpacing="5dp"
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</LinearLayout>

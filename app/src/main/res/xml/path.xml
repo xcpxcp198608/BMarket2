@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-files-path name="download" path="download"/>
+    <external-files-path name="images" path="images"/>
+    <external-files-path name="videos" path="videos"/>
+    <root-path path="/" name="root" />
+</paths>

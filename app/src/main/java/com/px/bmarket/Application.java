@@ -29,12 +29,15 @@ public class Application extends android.app.Application {
     private boolean isDownloading = false;
     private DownloadManager downloadManager;
 
+    public static String DOWNLOAD_PATH;
+
     @Override
     public void onCreate() {
         super.onCreate();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         sharedPreferences = this.getSharedPreferences(F.sp.video , Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        DOWNLOAD_PATH = getExternalFilesDir("download").getAbsolutePath();
 
         loadVideoInfo();
     }
@@ -70,7 +73,7 @@ public class Application extends android.app.Application {
     public void loadVideo(VideoInfo videoInfo){
         Logger.d(videoInfo.toString());
         isDownloading = sharedPreferences.getBoolean("isDownloading" ,false);
-        if(!ApkCheck.isFileExists(F.path.video ,"btvi3.mp4")){
+        if(!ApkCheck.isFileExists(Application.DOWNLOAD_PATH ,"btvi3.mp4")){
             downloadVideo(videoInfo);
         }else if(!isFileIntact(videoInfo.getMd5())){
             Logger.d("----video is not intact");
@@ -84,7 +87,7 @@ public class Application extends android.app.Application {
         if(downloadManager==null){
             downloadManager = DownloadManager.getInstance(getApplicationContext());
         }
-        downloadManager.startDownload(videoInfo.getName(),videoInfo.getUrl(),F.path.video);
+        downloadManager.startDownload(videoInfo.getName(),videoInfo.getUrl(),Application.DOWNLOAD_PATH);
         downloadManager.setOnDownloadListener(new OnDownloadListener() {
             @Override
             public void onStart(int progress, boolean isStart) {
@@ -114,7 +117,7 @@ public class Application extends android.app.Application {
     }
 
     public boolean isFileIntact(String md5){
-        String localMD5 = MD5.getFileMD5(F.path.video ,"btvi3.mp4");
+        String localMD5 = MD5.getFileMD5(Application.DOWNLOAD_PATH ,"btvi3.mp4");
         Logger.d(localMD5);
         if(localMD5.equalsIgnoreCase(md5)){
             Logger.d("----file is intact");
